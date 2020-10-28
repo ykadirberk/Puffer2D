@@ -4,6 +4,7 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
+                "${workspaceRoot}/src",
                 "C:\\SFML\\install\\include"
             ],
             "defines": [
