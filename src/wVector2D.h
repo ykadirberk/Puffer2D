@@ -15,7 +15,7 @@ class wVector2D {
         double GetYPos();
 
         void AddAngle(double a);
-        void AddLength(double a);
+        void AddLength(double b);
 
     private:
         double w, h, dx, dy;
