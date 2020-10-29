@@ -15,7 +15,7 @@ wVector2D::wVector2D(double x, double y, double width, double height) {
 }
 
 wVector2D::~wVector2D() {
-    //delete& dx, dy, w, h;
+    delete& dx, dy, w, h;
 }
 
 double wVector2D::GetAngle(){
@@ -47,7 +47,7 @@ void wVector2D::AddAngle(double a) {
     double s_a = GetAngle() + a;
     h = SinAngleF(s_a) * ex_length;
     w = CosAngleF(s_a) * ex_length;
-    //delete& s_a, ex_length;
+    delete& s_a, ex_length;
 }
 
 void wVector2D::AddLength(double b) {
@@ -56,6 +56,6 @@ void wVector2D::AddLength(double b) {
     double newlength = lng + b;
     h = SinAngleF(ang) * newlength;
     w = CosAngleF(ang) * newlength;
-    //delete& lng, ang, newlength;
+    delete& lng, ang, newlength;
 }
 
