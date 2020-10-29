@@ -9,5 +9,5 @@ class MessageHandler {
         int getMessage();
         void sendMessage(int msg);
     private:
-        int lastMessage;
+        int lastMessage = 0;
 };

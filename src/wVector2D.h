@@ -1,9 +1,8 @@
-#include "essentials.hpp"
-
+#include "essentials.cpp"
 
 class wVector2D {
     public: 
-        wVector2D(double x, double y, double angle, double length);
+        wVector2D(double x, double y, float angle, double length);
         wVector2D(double x, double y, double width, double height);
         ~wVector2D();
 
@@ -18,6 +17,6 @@ class wVector2D {
         void AddLength(double b);
 
     private:
-        double w, h, dx, dy;
+        double w = 0, h = 0, dx = 0, dy = 0;
         
 };
