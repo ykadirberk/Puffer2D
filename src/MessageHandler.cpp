@@ -1,7 +1,7 @@
 #include "MessageHandler.h"
 
 MessageHandler::MessageHandler() {
-
+    lastMessage = 0;
 }
 
 MessageHandler::~MessageHandler() {

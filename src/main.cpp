@@ -2,6 +2,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include "MessageHandler.h"
+#include "wVector2D.h"
 
 MessageHandler* msg = new MessageHandler();
 
