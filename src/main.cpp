@@ -6,6 +6,7 @@
 #include "wVector2D.h"
 #include "UI/Button.h"
 #include "UI/Text.h"
+#include "Character.h"
 using namespace std;
 
 
@@ -30,6 +31,10 @@ int main() {
 	//Ekrana çizilmesi istenen buton tanımlaması
 	//!Şu an işlevsiz
 	Button* but = new Button(window, "texture.png", 100, 100, 300, 300);
+
+	//Ekrana çizilmesi istenen karakter tanımlaması
+	//!Şu an işlevsiz
+	Character* cha = new Character(window, "character-tiles.png", 600, 100, 180, 160);
 
 	while(window->isOpen()) {
 		deltaTime = clock.getElapsedTime().asSeconds(); //zamandaki değişimi buldum
