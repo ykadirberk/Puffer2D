@@ -30,7 +30,7 @@ int main() {
 
 	//Ekrana çizilmesi istenen buton tanımlaması
 	//!Şu an işlevsiz
-	Button* but = new Button(window, "texture.png", 100, 100, 300, 300);
+	Button* but = new Button(window, 100, 100, 196, 88);
 
 	//Ekrana çizilmesi istenen karakter tanımlaması
 	//!Şu an işlevsiz
@@ -48,7 +48,9 @@ int main() {
 
 		}
 
-		but->Move(100*deltaTime, 100*deltaTime);
+		//but->Move(100*deltaTime, 100*deltaTime);
+		//? CALCULATIONS
+		but->Calculations();
 
 		window->clear(); //görüntüyü temizler (yoksa önceki frame'den görüntü kalır)
 		//? GAME DRAWINGS
