@@ -1,3 +1,4 @@
+#include <string>
 #include <iostream>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
@@ -5,43 +6,53 @@
 #include "wVector2D.h"
 #include "UI/Button.h"
 #include "UI/Text.h"
-
 using namespace std;
 
+
+
 int main() {
-	
-	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(800, 600), "Hello, world!");
+	cout << "[LOG] Engine starting" << endl;
+	//pencereyi ekrana verir, özelliklerini tanımlar
+	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Hello, world!");
 
 	sf::Clock clock; //zaman kavramını tanımlar
 	double deltaTime = 0; //Zamandaki değişimi tanımladım
 
-	sf::Font font;
-	if (!font.loadFromFile("retro-gaming.ttf")) {
-    	cout << "Couldn't load font.";
+	sf::Font font; //font tanımlanır
+	if (!font.loadFromFile("retro-gaming.ttf")) { //! Font dosyadan yüklenir. Bu kod daha sonra değiştirilecek.
+    	cout << "[LOG] Couldn't load font." << endl; //font yüklenemezse hata mesajı
+	} else {
+		cout << "[LOG] Font (Retro-Gaming) loaded." <<endl; //font yüklendi mesajı
 	}
+	//Ekrana yazılması istenen bir yazının tanımlanması
+	Text* writeatext = new Text(window, &font, "Bu bir oyundur.", 18, sf::Color::Yellow, sf::Text::Regular);
 
-	Text* writeatext = new Text(window, &font, "yazi", 50, sf::Color::White, sf::Text::Bold);
+	//Ekrana çizilmesi istenen buton tanımlaması
+	//!Şu an işlevsiz
+	Button* but = new Button(window, "texture.png", 100, 100, 300, 300);
 
 	while(window->isOpen()) {
 		deltaTime = clock.getElapsedTime().asSeconds(); //zamandaki değişimi buldum
-		cout << "deltaTime: " <<deltaTime << endl; /*
-			!sonra silinecek. komut istemcisi üstünden zamandaki değişimi gözlemliyoruz. performansa etkisi çok büyük
-		*/
 		clock.restart(); //zamandaki değişimi bulabilmek için renderdan önce ve son kayıttan sonra zaman değişkenini sıfırladım
 
+		//input denetleyicisi
 		sf::Event event;
 		while(window->pollEvent(event)) {
 			if(event.type == sf::Event::Closed)
 				window->close();
 
 		}
-		
-		window->clear(); //görüntüyü temizler (yoksa önceki frame'den görüntü kalır)
-		writeatext->DrawText();
-		window->display(); //pencereyi çizer
-		
-		
 
+		but->Move(100*deltaTime, 100*deltaTime);
+
+		window->clear(); //görüntüyü temizler (yoksa önceki frame'den görüntü kalır)
+		//? GAME DRAWINGS
+
+		but->Draw();
+
+		//? GUI DRAWINGS
+		writeatext->Draw(); //yazılması istenen görüntüyü yazdıran fonksiyon
+		window->display(); //pencereyi çizer
 	}
 	return 0;
 }

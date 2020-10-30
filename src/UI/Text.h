@@ -1,11 +1,10 @@
 #include <string>
 #include <SFML/Graphics.hpp>
-#include <cstdint>
 
 using std::string;
 class Text {
     public:
-        Text(sf::RenderWindow* window, sf::Font* font,string text, int size, sf::Color color, uint32_t style);
+        Text(sf::RenderWindow* window, sf::Font* font, string text, int size, sf::Color color, sf::Uint32 style);
         ~Text();
 
         void SetPosition(double x, double y);
@@ -13,9 +12,9 @@ class Text {
         double GetX();
         double GetY();
 
-        void DrawText();
+        void Draw();
 
     private:
         sf::Text* txt = NULL;
-        sf::RenderWindow* w;
+        sf::RenderWindow* w = NULL;
 };

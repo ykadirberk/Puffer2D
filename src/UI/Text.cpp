@@ -1,6 +1,6 @@
 #include "Text.h"
 
-Text::Text(sf::RenderWindow* window, sf::Font* font,string text, int size, sf::Color color, uint32_t style) {
+Text::Text(sf::RenderWindow* window, sf::Font* font,string text, int size, sf::Color color, sf::Uint32 style) {
     txt = new sf::Text();
     w = window;
     txt->setFont(*font);
@@ -30,6 +30,6 @@ double Text::GetY() {
     return txt->getPosition().y;
 }
 
-void Text::DrawText() {
+void Text::Draw() {
     w->draw(*txt);
 }
