@@ -2,11 +2,11 @@
 #include <iostream>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
-#include "MessageHandler.h"
 #include "wVector2D.h"
 #include "UI/Button.h"
 #include "UI/Text.h"
 #include "Character.h"
+#include "SheetAnimator.h"
 using namespace std;
 
 
@@ -28,9 +28,11 @@ int main() {
 	//Ekrana yazılması istenen bir yazının tanımlanması
 	Text* writeatext = new Text(window, &font, "Bu bir oyundur.", 18, sf::Color::Yellow, sf::Text::Regular);
 
+	//SheetAnimator* sa = new SheetAnimator("GUI/BUTTON/button.data");
+
 	//Ekrana çizilmesi istenen buton tanımlaması
 	//!Şu an işlevsiz
-	Button* but = new Button(window, 100, 100, 196, 88);
+	Button* but = new Button(window, "GUI/BUTTON/button.png",100, 100, 196, 88, 48, 22);
 
 	//Ekrana çizilmesi istenen karakter tanımlaması
 	//!Şu an işlevsiz

@@ -5,7 +5,7 @@ using std::string;
 
 class Button {
     public:
-        Button(sf::RenderWindow* window, double sX, double sY, double width, double height);
+        Button(sf::RenderWindow* window,string path ,double sX, double sY, double width, double height, double xOffset, double yOffset);
         ~Button();
 
         void SetPosition(double x, double y);
@@ -18,9 +18,7 @@ class Button {
         void Draw();
     private:
         sf::RenderWindow* w = NULL;
-        sf::Texture* texture0 = NULL;
-        sf::Texture* texture1 = NULL;
-        sf::Texture* texture2 = NULL;
+        sf::Texture* texture = NULL;
         sf::Sprite* sprite = NULL;
         double oW = 0, oH = 0; //Texture'un yüklendiği haldeki büyüklüğü
         double iWidth = 0, iHeight = 0; //Sprite'ın olmasını istediğimiz büyüklüğü
