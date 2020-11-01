@@ -3,60 +3,45 @@
 SheetAnimator::SheetAnimator(string path) {
     datafile.open(path, ifstream::in);
     istringstream datahandler;
-    string a;
-    string name;
-    bool check = false, bf = false;
-    vector<pos> p;
-    p.clear();
-    eSheet es;
-    getline(datafile, a);
+    string store;
+    eSheet e_one;
+    bool b_one = false;
     while(!datafile.eof()) {
-        while (check) {
-            getline(datafile, a);
-            char* dn;
-            strcpy(dn, a.c_str());
-            if (dn[0] == '[') {
-                check = false;
-                es.positions = p;
-                p.clear();
-                database.insert({es.name,es});
-                es.clear();
-                break;
+        getline(datafile, store);
+        datahandler.str(store);
+        cout << "[ON-WAY-TO-BE-PROCESSED] "<< store << endl;
+        if (!b_one) {
+            while(!datahandler.eof()) {
+                string s_one;
+                datahandler >> s_one;
+                cout << "[PRE-PROCESS] " << s_one << endl;
+                char* c_one = new char[s_one.length()];
+                strcpy(c_one, s_one.c_str());
+                cout << "[PROCESSING] " << c_one << endl;
+                if(c_one[0] == '#') {
+                    cout << "[COMMENT-DETECTED] " << c_one << endl;
+                    break;
+                } else if (c_one[0] == '[') {
+                    e_one.name = s_one;
+                    cout << "[NAME-RECOGNISED] "<<s_one << " defined." << endl;
+                    b_one = true;
+                } else {
+                    istringstream tempruler;
+                    tempruler.str(store);
+                    tempruler >> e_one.template_size.x >> e_one.template_size.y;
+                    cout << "[TEMPLATE-RULE-SET] " << e_one.template_size.x << ' ' << e_one.template_size.y << endl;
+                }
             }
-            datahandler.str(a);
-            pos n;
-            datahandler >> n.x >> n.y;
-            p.push_back(n);
+        } else {
+            string s_one;
+            datahandler >> s_one;
+            char* c_one = new char[s_one.length()];
+            strcpy(c_one, s_one.c_str());
+            if (c_one[0] != '[' && c_one[0] != '#') {
+                
+            }
         }
 
-        while (!check) {
-            datahandler.str(a);
-            char* aa = NULL;
-            datahandler >> aa;
-            if (aa[0] == '#') break;
-            if (aa[0] == '[') {
-                es.name = aa;
-            } else if (!bf) {
-                string st = aa;
-                istringstream isst;
-                isst.str(st);
-                isst >> es.template_size.x;
-                datahandler >> es.template_size.y;
-                bf = true;
-                getline(datafile, a);
-                break;
-            }
-            aa = NULL;
-            datahandler >> aa;
-            if (aa[0] != '#') {
-                es.rule_set = true;
-                string st = aa;
-                istringstream isst;
-                isst.str(st);
-                isst >> es.rule;
-                check = true;
-            }
-        }
         
         
     }

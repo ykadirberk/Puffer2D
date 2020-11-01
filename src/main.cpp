@@ -28,7 +28,7 @@ int main() {
 	//Ekrana yazılması istenen bir yazının tanımlanması
 	Text* writeatext = new Text(window, &font, "Bu bir oyundur.", 18, sf::Color::Yellow, sf::Text::Regular);
 
-	//SheetAnimator* sa = new SheetAnimator("GUI/BUTTON/button.data");
+	SheetAnimator* sa = new SheetAnimator("GUI/BUTTON/button.data");
 
 	//Ekrana çizilmesi istenen buton tanımlaması
 	//!Şu an işlevsiz
