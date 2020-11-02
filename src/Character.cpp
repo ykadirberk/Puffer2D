@@ -39,6 +39,10 @@ void Character::Move(double x, double y){
     iY += y;
 }
 
+sf::Sprite* Character::GetSprite() {
+    return sprite;
+}
+
 double Character::GetX(){
     return iX;
 }
@@ -50,4 +54,11 @@ double Character::GetY(){
 
 void Character::Draw(){
     w->draw(*sprite);
+}
+
+void Character::Calculate() {
+    movement->calculate();
+}
+void Character::SetMovementClass(CharMoveTemp* temp) {
+    movement = temp;
 }

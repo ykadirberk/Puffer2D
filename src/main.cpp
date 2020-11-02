@@ -7,6 +7,7 @@
 #include "UI/Text.h"
 #include "Character.h"
 #include "SheetAnimator.h"
+#include "PlayerMovement.h"
 using namespace std;
 
 
@@ -37,7 +38,9 @@ int main() {
 	//Ekrana çizilmesi istenen karakter tanımlaması
 	//!Şu an işlevsiz
 	Character* cha = new Character(window, "character-tiles.png", 600, 100, 180, 160);
-
+	PlayerMovement* mov = new PlayerMovement(cha->GetSprite());
+	cha->SetMovementClass(mov);
+	
 	while(window->isOpen()) {
 		deltaTime = clock.getElapsedTime().asSeconds(); //zamandaki değişimi buldum
 		clock.restart(); //zamandaki değişimi bulabilmek için renderdan önce ve son kayıttan sonra zaman değişkenini sıfırladım
@@ -53,6 +56,7 @@ int main() {
 		//but->Move(100*deltaTime, 100*deltaTime);
 		//? CALCULATIONS
 		but->Calculations();
+		cha->Calculate();
 
 		window->clear(); //görüntüyü temizler (yoksa önceki frame'den görüntü kalır)
 		//? GAME DRAWINGS

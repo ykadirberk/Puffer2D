@@ -1,6 +1,7 @@
 #include <string>
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include "CharMoveTemp.h"
 using std::string;
 
 class Character {
@@ -11,11 +12,16 @@ class Character {
         void SetPosition(double x, double y);
         void SetSize(double w, double h);
         void Move(double x, double y);
+        sf::Sprite* GetSprite();
         double GetX();
         double GetY();
+
         void Draw();
+        void Calculate();
+        void SetMovementClass(CharMoveTemp* temp);
 
     private:
+        CharMoveTemp* movement = NULL;
         sf::RenderWindow* w = NULL;
         sf::Texture* texture = NULL;
         sf::Sprite* sprite = NULL;
