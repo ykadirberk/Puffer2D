@@ -1,3 +1,4 @@
+#pragma once
 #include "CharMoveTemp.h"
 
 class PlayerMovement : public CharMoveTemp {

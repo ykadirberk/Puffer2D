@@ -1,3 +1,4 @@
+#pragma once
 #include "essentials.cpp"
 
 class wVector2D {
