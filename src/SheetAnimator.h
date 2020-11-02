@@ -16,14 +16,11 @@ struct pos {
 
 struct eSheet {
         string name;
-        pos template_size;
         bool rule_set = false;
         double rule;
         vector<pos> positions;
         void clear() {
             name.clear();
-            template_size.x = 0;
-            template_size.y = 0;
             rule_set = false;
             rule = 0;
             positions.clear();
@@ -35,6 +32,7 @@ class SheetAnimator {
     public:
         SheetAnimator(string path);
         ~SheetAnimator();
+        pos template_size;
     private:
         ifstream datafile;
         map<string, eSheet> database;
