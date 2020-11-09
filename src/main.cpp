@@ -21,10 +21,10 @@ int main() {
 	double deltaTime = 0; //Zamandaki değişimi tanımladım
 
 	sf::Font font; //font tanımlanır
-	if (!font.loadFromFile("retro-gaming.ttf")) { //! Font dosyadan yüklenir. Bu kod daha sonra değiştirilecek.
+	if (!font.loadFromFile("kongtext.ttf")) { //! Font dosyadan yüklenir. Bu kod daha sonra değiştirilecek.
     	cout << "[LOG] Couldn't load font." << endl; //font yüklenemezse hata mesajı
 	} else {
-		cout << "[LOG] Font (Retro-Gaming) loaded." <<endl; //font yüklendi mesajı
+		cout << "[LOG] Font (kongtext) loaded." <<endl; //font yüklendi mesajı
 	}
 	//Ekrana yazılması istenen bir yazının tanımlanması
 	Text* writeatext = new Text(window, &font, "Bu bir oyundur.", 18, sf::Color::Yellow, sf::Text::Regular);
@@ -33,7 +33,7 @@ int main() {
 
 	//Ekrana çizilmesi istenen buton tanımlaması
 	//!Şu an işlevsiz
-	Button* but = new Button(window, "GUI/BUTTON/button.png",100, 100, 196, 88, 48, 22);
+	Button* but = new Button(window, "GUI/BUTTON/button.png",100, 300, 196, 88, 48, 22);
 
 	//Ekrana çizilmesi istenen karakter tanımlaması
 	//!Şu an işlevsiz
@@ -61,10 +61,10 @@ int main() {
 		window->clear(); //görüntüyü temizler (yoksa önceki frame'den görüntü kalır)
 		//? GAME DRAWINGS
 
-		but->Draw();
-
+		
 		//? GUI DRAWINGS
 		writeatext->Draw(); //yazılması istenen görüntüyü yazdıran fonksiyon
+		but->Draw();
 		window->display(); //pencereyi çizer
 	}
 	return 0;
