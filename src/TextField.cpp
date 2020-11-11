@@ -15,9 +15,8 @@ void TextField::SetPosition(double x, double y) {
     dy = y;
 }
 
-void TextField::SetFieldSize(double x, double y) {
+void TextField::SetFieldLength(double x) {
     dwidth = x;
-    dheight = y;
 }
 
 void TextField::SetFontSize(double a) {
@@ -34,4 +33,30 @@ double TextField::GetY() {
 
 void TextField::Draw() {
     
+}
+
+
+int TextField::GetCharLength(char &letter, sf::Font &font, int font_size) {
+    return font.getGlyph(int(letter), font_size, false).advance;
+}
+
+void TextField::CalculateLineLength() {
+    int last_word = 0;
+    for(int i = 0; i <= msg.size(); i++) {
+        if(cLength < dwidth) {
+            cLength += GetCharLength(msg[i], *fnt, _dpfontsize);
+        } else {
+            msg.replace(last_word, 1, "\n");
+            i = last_word;
+            cLength = 0;
+        }
+        if(msg[i] == ' ') {
+            last_word = i;
+        }
+    }
+    //msg complete
+}
+
+void TextField::CalculateText() {
+
 }

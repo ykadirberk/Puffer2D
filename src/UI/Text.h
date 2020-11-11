@@ -12,6 +12,7 @@ class Text {
         void Move(double x, double y);
         double GetX();
         double GetY();
+        void SetText(string t);
 
         void Draw();
 

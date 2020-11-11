@@ -18,6 +18,7 @@ int main() {
 	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Hello, world!");
 
 	sf::Clock clock; //zaman kavramını tanımlar
+	sf::Clock clock2;
 	double deltaTime = 0; //Zamandaki değişimi tanımladım
 
 	sf::Font font; //font tanımlanır
@@ -28,7 +29,6 @@ int main() {
 	}
 	//Ekrana yazılması istenen bir yazının tanımlanması
 	Text* writeatext = new Text(window, &font, "Bu bir oyundur.", 18, sf::Color::Yellow, sf::Text::Regular);
-
 	SheetAnimator* sa = new SheetAnimator("GUI/BUTTON/button.data");
 
 	//Ekrana çizilmesi istenen buton tanımlaması
@@ -43,7 +43,7 @@ int main() {
 	
 	while(window->isOpen()) {
 		deltaTime = clock.getElapsedTime().asSeconds(); //zamandaki değişimi buldum
-		clock.restart(); //zamandaki değişimi bulabilmek için renderdan önce ve son kayıttan sonra zaman değişkenini sıfırladım
+		clock.restart();  //zamandaki değişimi bulabilmek için renderdan önce ve son kayıttan sonra zaman değişkenini sıfırladım
 
 		//input denetleyicisi
 		sf::Event event;
