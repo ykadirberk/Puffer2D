@@ -11,4 +11,4 @@ class Object
         {
             printf("Draw is not defined.");
         }        
-}
+};
