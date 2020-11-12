@@ -36,7 +36,7 @@ void TextField::Draw() {
 }
 
 
-int TextField::GetCharLength(char &letter, sf::Font &font, int font_size) {
+inline int TextField::GetCharLength(char &letter, sf::Font &font, int font_size) {
     return font.getGlyph(int(letter), font_size, false).advance;
 }
 

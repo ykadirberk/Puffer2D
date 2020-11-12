@@ -30,8 +30,8 @@ double Text::GetY() {
     return txt->getPosition().y;
 }
 
-void Text::SetText(string t) {
-    txt->setString(t);
+void Text::SetText(string* t) {
+    txt->setString(*t);
 }
 
 void Text::Draw() {

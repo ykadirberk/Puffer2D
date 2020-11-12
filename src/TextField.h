@@ -1,11 +1,4 @@
 #pragma once
-#define COLOR_RED "&r"
-#define COLOR_YELLOW "&y"
-#define COLOR_BLUE "&b"
-#define COLOR_RED "&r"
-#define COLOR_RED "&r"
-#define COLOR_RED "&r"
-#define COLOR_RED "&r"
 #include <string>
 #include <vector>
 #include <iostream>
@@ -27,7 +20,7 @@ class TextField {
 
     private:
 
-        int GetCharLength(char &letter, sf::Font &font, int font_size);
+        inline int GetCharLength(char &letter, sf::Font &font, int font_size);
         void CalculateLineLength();
         void CalculateText();
 
