@@ -1,5 +1,5 @@
 #include <string>
-#include <iostream>
+#include <stdio.h>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include "wVector2D.h"
@@ -23,9 +23,9 @@ int main() {
 
 	sf::Font font; //font tanımlanır
 	if (!font.loadFromFile("kongtext.ttf")) { //! Font dosyadan yüklenir. Bu kod daha sonra değiştirilecek.
-    	cout << "[LOG] Couldn't load font." << endl; //font yüklenemezse hata mesajı
+    	printf("[LOG] Couldn't load font. \n"); //font yüklenemezse hata mesajı
 	} else {
-		cout << "[LOG] Font (kongtext) loaded." <<endl; //font yüklendi mesajı
+		printf("[LOG] Font (kongtext) loaded. \n"); //font yüklendi mesajı
 	}
 	//Ekrana yazılması istenen bir yazının tanımlanması
 	Text* writeatext = new Text(window, &font, "Bu bir oyundur.", 18, sf::Color::Yellow, sf::Text::Regular);

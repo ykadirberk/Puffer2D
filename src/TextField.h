@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <iostream>
+#include <stdio.h>
 #include <SFML/Graphics.hpp>
 #include <sstream>
 using namespace std;

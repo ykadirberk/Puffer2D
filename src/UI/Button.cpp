@@ -4,9 +4,9 @@ Button::Button(sf::RenderWindow* window,string path ,double sX, double sY, doubl
     w = window;
     texture = new sf::Texture();
     if (!texture->loadFromFile(path)) { //! Texture dosyadan yüklenir. Bu kod daha sonra değiştirilecek.
-    	std::cout << "[LOG] Couldn't load button texture." << std::endl; //texture yüklenemezse hata mesajı
+    	printf("[LOG] Couldn't load button texture. \n"); //texture yüklenemezse hata mesajı
 	} else {
-		std::cout << "[LOG] Button texture loaded." << std::endl; //texture yüklendi mesajı
+		printf("[LOG] Button texture loaded. \n"); //texture yüklendi mesajı
 	}
 
     //Yüklenen Texture'un gerçek büyüklükleri kaydediliyor.
@@ -54,7 +54,6 @@ double Button::GetY(){
 void Button::Calculations() {
     mX = sf::Mouse::getPosition(*w).x;
     mY = sf::Mouse::getPosition(*w).y;
-    //std::cout << mX << " " << mY << std::endl;
 
     if (mX >= iX 
         && mX <= iX + iWidth 
@@ -69,7 +68,7 @@ void Button::Calculations() {
             } else {
                 if (mousePressed) {
                     //execution
-                    std::cout << "[LOG] Button function executed.\n";
+                    printf("[LOG] Button function executed.\n");
                     mousePressed = false;
                 }
             }

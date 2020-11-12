@@ -1,12 +1,13 @@
 #include "Character.h"
 
+
 Character::Character(sf::RenderWindow* window, string path, double sX, double sY, double width, double height) {
     texture = new sf::Texture();
     sprite = new sf::Sprite();
     if (!texture->loadFromFile(path)) { //! Texture dosyadan yüklenir. Bu kod daha sonra değiştirilecek.
-    	std::cout << "[LOG] Couldn't load Character texture." << std::endl; //texture yüklenemezse hata mesajı
+    	printf("[LOG] Couldn't load Character texture. \n"); //texture yüklenemezse hata mesajı
 	} else {
-		std::cout << "[LOG] Character texture loaded." << std::endl; //texture yüklendi mesajı
+		printf("[LOG] Character texture loaded. \n"); //texture yüklendi mesajı
 	}
     w = window;
     

@@ -1,12 +1,12 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <string>
-#include <iostream>
+#include <stdio.h>
 #include <SFML/Window.hpp>
 
 class CharMoveTemp{
     public:
         virtual void calculate() {
-            std::cout << "Player movement is not defined.";
+            printf("Player movement is not defined.");
         }
 };

@@ -1,11 +1,12 @@
 #pragma once
 #include <string>
-#include <iostream>
+#include <stdio.h>
 #include <SFML/Graphics.hpp>
 #include "CharMoveTemp.h"
+#include "Object.h"
 using std::string;
 
-class Character {
+class Character : public Object {
     public:
         Character(sf::RenderWindow* window, string path, double sX, double sY, double width, double height);
         ~Character();

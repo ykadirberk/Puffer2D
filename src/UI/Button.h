@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include <iostream>
+#include <stdio.h>
 #include <SFML/Graphics.hpp>
 using std::string;
 
