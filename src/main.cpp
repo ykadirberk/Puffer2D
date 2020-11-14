@@ -31,6 +31,11 @@ int main() {
 	Text* writeatext = new Text(window, &font, "Bu bir oyundur.", 18, sf::Color::Yellow, sf::Text::Regular);
 	SheetAnimator* sa = new SheetAnimator("GUI/BUTTON/button.data");
 
+	string annen = "Burasi cok onemli";
+	string annen0 = annen.substr(annen.find('i'));
+	annen = annen.substr(0,annen.find('i'));
+	printf(" %s \n",annen.c_str());
+	printf(" %s \n",annen0.c_str());
 	//Ekrana çizilmesi istenen buton tanımlaması
 	//!Şu an işlevsiz
 	Button* but = new Button(window, "GUI/BUTTON/button.png",100, 300, 196, 88, 48, 22);

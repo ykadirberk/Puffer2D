@@ -19,6 +19,7 @@ class Text {
         void Draw();
 
     private:
+        
         vector<sf::Text*> spec_chara;
         sf::Text* txt = NULL;
         sf::RenderWindow* w = NULL;
