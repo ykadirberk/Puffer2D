@@ -1,9 +1,12 @@
 #include "TextFactory.h"
 
-TextFactory::TextFactory(string input, sf::Font* fnt) {
+TextFactory::TextFactory(sf::RenderWindow* window, string input, sf::Font* fnt) {
     total_string = input;
+    total_string_backup = input;
     p_font = fnt;
-
+    w = window;
+    // color implementation
+    // u can add new colors or delete them.
     colormap.insert(pair<string ,sf::Color>(RED,COLOR_RED));
     colormap.insert(pair<string ,sf::Color>(ORANGE,COLOR_ORANGE));
     colormap.insert(pair<string ,sf::Color>(YELLOW,COLOR_YELLOW));
@@ -25,14 +28,47 @@ TextFactory::~TextFactory() {
 }
 
 void TextFactory::PrepareTexts() {
-    colortype = sf::Color(0,128,255);
-    size_t tbeg = 0;
-    size_t tend = 0;
+    colortype = COLOR_WHITE;
+    int linecounter = 0; // kaç satır olduğunu tutuyorum (render için gerekli)
+    int posYhandler = 0; //satır değişimleri için y'yi tutuyorum
+    int posXhandler = 0; //renk değişimi durumlarında x konumu tutmak
+    size_t tend = 0; //format değiştirici karakteri tutuyorum
     while(1) {
-        tend = total_string.find("§");
+        tend = total_string.find('&');
         if (tend == string::npos) {
-            break;
+            int lastbreak = 0;
+            int textwidth;
+            for (int i = 0; i < total_string.length(); i++) {
+                if (total_string[i] == '\0') { //Eğer string bitmişse
+                    Text* back = new Text(w, p_font, total_string, 18, colortype);
+                    if (boldness) {
+                        back->GetTextObject()->setStyle(sf::Text::Bold);
+                    }
+                    texts.push_back(back);
+                    break;
+                }
+                if (textwidth + GetCharLength(total_string[i], *p_font, fontsize) < fieldbox->GetWidth()) {
+                    textwidth += GetCharLength(total_string[i], *p_font, fontsize);
+                } else {
+                    string firsts = total_string.substr(0,lastbreak);
+                    total_string = total_string.substr(lastbreak + 1);
+                    lastbreak = 0;
+                    Text* back = new Text(w, p_font, firsts, 18, colortype);
+                    if (boldness) {
+                        back->GetTextObject()->setStyle(sf::Text::Bold);
+                    }
+                    texts.push_back(back);
+                    linecounter++;
+                }
+                if (total_string[i] == ' ') {
+                    lastbreak = i;
+                }
+                
+            }
+        } else {
+            
         }
+
     }
 }
 

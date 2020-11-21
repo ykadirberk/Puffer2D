@@ -11,7 +11,7 @@ class PlainField {
         ~PlainField();
 
         void SetPosition(double x, double y);
-        void SetFieldLength(double x);
+        void SetFieldLength(double x, double y);
         double GetWidth();
         double GetHeight();
         double GetX();
@@ -21,5 +21,4 @@ class PlainField {
     private:
         sf::RenderWindow* w = NULL;
         double dx = 0, dy = 0, dwidth = 0, dheight = 0;
-
 };

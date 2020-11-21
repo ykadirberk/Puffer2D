@@ -28,7 +28,7 @@ int main() {
 		printf("[LOG] Font (kongtext) loaded. \n"); //font yüklendi mesajı
 	}
 	//Ekrana yazılması istenen bir yazının tanımlanması
-	Text* writeatext = new Text(window, &font, "Bu bir oyundur.", 18, sf::Color::Yellow, sf::Text::Regular);
+	Text* writeatext = new Text(window, &font, "Bu bir oyundur.", 18, sf::Color::Yellow);
 	SheetAnimator* sa = new SheetAnimator("GUI/BUTTON/button.data");
 
 	string annen = "Burasi cok onemli";

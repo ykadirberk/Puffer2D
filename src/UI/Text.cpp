@@ -1,13 +1,16 @@
 #include "Text.h"
 
-Text::Text(sf::RenderWindow* window, sf::Font* font,string text, int size, sf::Color color, sf::Uint32 style) {
+Text::Text(sf::RenderWindow* window, sf::Font* font,string text, int size, sf::Color color) {
     txt = new sf::Text();
+    for (int i = 0; i < text.length(); i++) {
+        spec_chara.push_back(new sf::Text(text[i], *font, size));
+    }
     w = window;
     txt->setFont(*font);
     txt->setString(text);
     txt->setCharacterSize(size);
     txt->setFillColor(color);
-    txt->setStyle(style);
+    txt->setStyle(sf::Text::Regular);
 }
 
 Text::~Text() {
@@ -34,6 +37,30 @@ void Text::SetText(string* t) {
     txt->setString(*t);
 }
 
-void Text::Draw() {
-    w->draw(*txt);
+sf::Text* Text::GetTextObject() {
+    return txt;
+}
+
+bool Text::Draw() {
+    if (visibility) {
+        if (d_draw) {
+            w->draw(*txt);
+        } else {
+            for (int i = 0; i < counter; i++) {
+                w->draw(*spec_chara[i]);
+            }
+        }
+    } 
+    return d_draw;
+}
+
+void Text::Calc() {
+    timer += *deltaTime;
+    if (timer >= animation_const) {
+        counter++;
+    }
+}
+
+void Text::SetMode(bool n) {
+    slowmode = n;
 }

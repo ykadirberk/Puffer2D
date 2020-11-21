@@ -14,9 +14,8 @@
 #define PURPLE "b"
 #define BLACK "c"
 #define WHITE "d"
-#define ObO "e"
-#define RESET "f"
-#define BOLD "g"
+#define RESET "e"
+#define BOLD "f"
 
 #define COLOR_RED sf::Color(255,0,0)
 #define COLOR_ORANGE sf::Color(255,128,0)
@@ -38,25 +37,35 @@
 #include <vector>
 #include <map>
 #include "UI/Text.h"
+#include "UI/PlainField.h"
 using namespace std;
 
 class TextFactory {
     public:
-        TextFactory(string input, sf::Font* fnt);
+        TextFactory(sf::RenderWindow* window,string input, sf::Font* fnt);
         ~TextFactory();
 
         void PrepareTexts();
     private:
 
         inline int GetCharLength(char &letter, sf::Font &font, int font_size);
+        inline string CalculateLineLength(string ms);
 
+        PlainField* fieldbox = NULL;
+        
+        map<string, sf::Color> colormap;
+        
+        vector<string> parted_strings;
+        vector<Text*> texts;
+        
+        sf::Font* p_font;
+        sf::Color colortype;
+        sf::RenderWindow* w = NULL;
+
+        string total_string;
+        string total_string_backup;
+        double posX, posY, fontsize = 0, textsize = 0;
         bool obotime = false;
         bool boldness = false;
-        map<string, sf::Color> colormap;
-        sf::Color colortype;
-        vector<string> parted_strings;
-        vector<Text> texts;
-        sf::Font* p_font;
-        string total_string;
 
 };
