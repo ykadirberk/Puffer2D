@@ -3,8 +3,8 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include "wVector2D.h"
-#include "UI/Button.h"
-#include "UI/Text.h"
+#include "Button.h"
+#include "Text.h"
 #include "Character.h"
 #include "SheetAnimator.h"
 #include "PlayerMovement.h"

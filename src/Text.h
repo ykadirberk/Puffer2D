@@ -22,6 +22,7 @@ class Text {
         bool Draw();
 
     private:
+        string stringofthis;
         double* deltaTime = 0;
         double timer = 0;
         double animation_const = 0.1;

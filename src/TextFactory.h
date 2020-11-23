@@ -36,8 +36,8 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <map>
-#include "UI/Text.h"
-#include "UI/PlainField.h"
+#include "Text.h"
+#include "PlainField.h"
 using namespace std;
 
 class TextFactory {
@@ -46,6 +46,7 @@ class TextFactory {
         ~TextFactory();
 
         void PrepareTexts();
+        void DrawTexts();
     private:
 
         inline int GetCharLength(char &letter, sf::Font &font, int font_size);

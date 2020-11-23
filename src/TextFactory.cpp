@@ -5,6 +5,7 @@ TextFactory::TextFactory(sf::RenderWindow* window, string input, sf::Font* fnt) 
     total_string_backup = input;
     p_font = fnt;
     w = window;
+    fieldbox = new PlainField(window);
     // color implementation
     // u can add new colors or delete them.
     colormap.insert(pair<string ,sf::Color>(RED,COLOR_RED));
@@ -41,6 +42,10 @@ void TextFactory::PrepareTexts() {
             for (int i = 0; i < total_string.length(); i++) {
                 if (total_string[i] == '\0') { //Eğer string bitmişse
                     Text* back = new Text(w, p_font, total_string, 18, colortype);
+                    back->SetPosition(
+                            10 + fieldbox->GetX(),
+                            10 +  fieldbox->GetY() + ((back->GetTextObject()->getCharacterSize() + 10)*linecounter)
+                    );
                     if (boldness) {
                         back->GetTextObject()->setStyle(sf::Text::Bold);
                     }
@@ -54,6 +59,10 @@ void TextFactory::PrepareTexts() {
                     total_string = total_string.substr(lastbreak + 1);
                     lastbreak = 0;
                     Text* back = new Text(w, p_font, firsts, 18, colortype);
+                    back->SetPosition(
+                            10 + fieldbox->GetX(),
+                            10 +  fieldbox->GetY() + ((back->GetTextObject()->getCharacterSize() + 10)*linecounter)
+                    );
                     if (boldness) {
                         back->GetTextObject()->setStyle(sf::Text::Bold);
                     }
@@ -66,9 +75,23 @@ void TextFactory::PrepareTexts() {
                 
             }
         } else {
-            
+            int lastbreak = 0;
+            int textwidth;
+            string sub_ = total_string.substr(0, tend);
+            for (int i = 0; i < sub_.length(); i++) {
+
+            }
         }
 
+    }
+}
+
+void TextFactory::DrawTexts() {
+    for (int i = 0; i < texts.size(); i++) {
+        texts[i]->Calc();
+        if(!texts[i]->Draw()) {
+            break;
+        }
     }
 }
 

@@ -1,6 +1,7 @@
 #include "Text.h"
 
 Text::Text(sf::RenderWindow* window, sf::Font* font,string text, int size, sf::Color color) {
+    stringofthis = text;
     txt = new sf::Text();
     for (int i = 0; i < text.length(); i++) {
         spec_chara.push_back(new sf::Text(text[i], *font, size));
@@ -56,8 +57,16 @@ bool Text::Draw() {
 
 void Text::Calc() {
     timer += *deltaTime;
-    if (timer >= animation_const) {
-        counter++;
+    if (!d_draw) {
+        if (timer >= animation_const) {
+            counter++;
+            timer = 0;
+        }
+    } else {
+        timer = 0;
+    }
+    if (counter >= stringofthis.length()) {
+        d_draw = true;
     }
 }
 
