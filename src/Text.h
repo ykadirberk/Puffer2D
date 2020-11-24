@@ -12,6 +12,7 @@ class Text {
 
         void SetPosition(double x, double y);
         void Move(double x, double y);
+        void SetDeltaTimer(double* delt);
         double GetX();
         double GetY();
         void SetText(string* t);
@@ -23,7 +24,7 @@ class Text {
 
     private:
         string stringofthis;
-        double* deltaTime = 0;
+        double *deltaTime = 0;
         double timer = 0;
         double animation_const = 0.1;
         int counter = 0;

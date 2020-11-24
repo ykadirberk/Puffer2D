@@ -1,21 +1,21 @@
 #pragma once
 
-#define RED "0"
-#define ORANGE "1"
-#define YELLOW "2"
-#define LIGHT_GREEN "3"
-#define GREEN "4"
-#define DARK_GREEN "5"
-#define LIGHT_BLUE "6"
-#define BLUE "7"
-#define DARK_BLUE "8"
-#define PINK "9"
-#define MAGENTA "a"
-#define PURPLE "b"
-#define BLACK "c"
-#define WHITE "d"
-#define RESET "e"
-#define BOLD "f"
+#define RED '0'
+#define ORANGE '1'
+#define YELLOW '2'
+#define LIGHT_GREEN '3'
+#define GREEN '4'
+#define DARK_GREEN '5'
+#define LIGHT_BLUE '6'
+#define BLUE '7'
+#define DARK_BLUE '8'
+#define PINK '9'
+#define MAGENTA 'a'
+#define PURPLE 'b'
+#define BLACK 'c'
+#define WHITE 'd'
+#define RESET 'e'
+#define BOLD 'f'
 
 #define COLOR_RED sf::Color(255,0,0)
 #define COLOR_ORANGE sf::Color(255,128,0)
@@ -54,7 +54,7 @@ class TextFactory {
 
         PlainField* fieldbox = NULL;
         
-        map<string, sf::Color> colormap;
+        map<char, sf::Color> colormap;
         
         vector<string> parted_strings;
         vector<Text*> texts;

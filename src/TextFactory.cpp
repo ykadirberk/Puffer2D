@@ -8,20 +8,20 @@ TextFactory::TextFactory(sf::RenderWindow* window, string input, sf::Font* fnt) 
     fieldbox = new PlainField(window);
     // color implementation
     // u can add new colors or delete them.
-    colormap.insert(pair<string ,sf::Color>(RED,COLOR_RED));
-    colormap.insert(pair<string ,sf::Color>(ORANGE,COLOR_ORANGE));
-    colormap.insert(pair<string ,sf::Color>(YELLOW,COLOR_YELLOW));
-    colormap.insert(pair<string ,sf::Color>(LIGHT_GREEN,COLOR_LIGHT_GREEN));
-    colormap.insert(pair<string ,sf::Color>(GREEN,COLOR_GREEN));
-    colormap.insert(pair<string ,sf::Color>(DARK_GREEN,COLOR_DARK_GREEN));
-    colormap.insert(pair<string ,sf::Color>(LIGHT_BLUE,COLOR_LIGHT_BLUE));
-    colormap.insert(pair<string ,sf::Color>(BLUE,COLOR_BLUE));
-    colormap.insert(pair<string ,sf::Color>(DARK_BLUE,COLOR_DARK_BLUE));
-    colormap.insert(pair<string ,sf::Color>(PINK,COLOR_PINK));
-    colormap.insert(pair<string ,sf::Color>(MAGENTA,COLOR_MAGENTA));
-    colormap.insert(pair<string ,sf::Color>(PURPLE,COLOR_PURPLE));
-    colormap.insert(pair<string ,sf::Color>(BLACK,COLOR_BLACK));
-    colormap.insert(pair<string ,sf::Color>(WHITE,COLOR_WHITE));
+    colormap.insert(pair<char ,sf::Color>(RED,COLOR_RED));
+    colormap.insert(pair<char ,sf::Color>(ORANGE,COLOR_ORANGE));
+    colormap.insert(pair<char ,sf::Color>(YELLOW,COLOR_YELLOW));
+    colormap.insert(pair<char ,sf::Color>(LIGHT_GREEN,COLOR_LIGHT_GREEN));
+    colormap.insert(pair<char ,sf::Color>(GREEN,COLOR_GREEN));
+    colormap.insert(pair<char ,sf::Color>(DARK_GREEN,COLOR_DARK_GREEN));
+    colormap.insert(pair<char ,sf::Color>(LIGHT_BLUE,COLOR_LIGHT_BLUE));
+    colormap.insert(pair<char ,sf::Color>(BLUE,COLOR_BLUE));
+    colormap.insert(pair<char ,sf::Color>(DARK_BLUE,COLOR_DARK_BLUE));
+    colormap.insert(pair<char ,sf::Color>(PINK,COLOR_PINK));
+    colormap.insert(pair<char ,sf::Color>(MAGENTA,COLOR_MAGENTA));
+    colormap.insert(pair<char ,sf::Color>(PURPLE,COLOR_PURPLE));
+    colormap.insert(pair<char ,sf::Color>(BLACK,COLOR_BLACK));
+    colormap.insert(pair<char ,sf::Color>(WHITE,COLOR_WHITE));
 }
 
 TextFactory::~TextFactory() {
@@ -76,10 +76,50 @@ void TextFactory::PrepareTexts() {
             }
         } else {
             int lastbreak = 0;
-            int textwidth;
+            int textwidth = 0;
+            int lastextwidth = 0;
             string sub_ = total_string.substr(0, tend);
-            for (int i = 0; i < sub_.length(); i++) {
-
+            for (int i = 0; i < sub_.length(); i++) { // this for loop has the exact same code with string::npos state described above
+               if (total_string[i] == '\0') { //Eğer string bitmişse
+                    Text* back = new Text(w, p_font, sub_, 18, colortype);
+                    back->SetPosition(
+                            10 + fieldbox->GetX(),
+                            10 +  fieldbox->GetY() + ((back->GetTextObject()->getCharacterSize() + 10)*linecounter)
+                    );
+                    if (boldness) {
+                        back->GetTextObject()->setStyle(sf::Text::Bold);
+                    }
+                    texts.push_back(back);
+                    break;
+                }
+                if (textwidth + GetCharLength(sub_[i], *p_font, fontsize) < fieldbox->GetWidth()) {
+                    textwidth += GetCharLength(sub_[i], *p_font, fontsize);
+                } else {
+                    string firsts = sub_.substr(0,lastbreak);
+                    sub_ = sub_.substr(lastbreak + 1);
+                    lastbreak = 0;
+                    Text* back = new Text(w, p_font, firsts, 18, colortype);
+                    back->SetPosition(
+                            10 + fieldbox->GetX() + textwidth,
+                            10 +  fieldbox->GetY() + ((back->GetTextObject()->getCharacterSize() + 10)*linecounter)
+                    );
+                    if (boldness) {
+                        back->GetTextObject()->setStyle(sf::Text::Bold);
+                    }
+                    texts.push_back(back);
+                    linecounter++;
+                }
+                if (total_string[i] == ' ') {
+                    lastbreak = i;
+                }
+            }
+            if (total_string[tend + 1] == 'e') {
+                colortype = COLOR_WHITE;
+                boldness = false;
+            } else if (total_string[tend + 1] == 'f') {
+                boldness = true;
+            } else {
+                colortype = colormap.at(total_string[tend + 1]);
             }
         }
 

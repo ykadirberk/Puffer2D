@@ -4,7 +4,8 @@ Text::Text(sf::RenderWindow* window, sf::Font* font,string text, int size, sf::C
     stringofthis = text;
     txt = new sf::Text();
     for (int i = 0; i < text.length(); i++) {
-        spec_chara.push_back(new sf::Text(text[i], *font, size));
+        sf::Text *_temp_ = new sf::Text(text[i], *font, size);
+        spec_chara.push_back(_temp_);
     }
     w = window;
     txt->setFont(*font);
@@ -20,10 +21,20 @@ Text::~Text() {
 
 void Text::SetPosition(double x, double y) {
     txt->setPosition(x, y);
+    int width_calc = 0;
+    spec_chara[0]->setPosition(x,y);
+    for (int i = 1; i < spec_chara.size(); i++) {
+        width_calc += (txt->getFont().getGlyph(int(spec_chara[i - 1]->getString().toAnsiString().c_str()), txt->getCharacterSize(), false).advance);
+        spec_chara[i]->setPosition(x + width_calc, y);
+    }
 }
 
 void Text::Move(double x, double y) {
     txt->move(x, y);
+}
+
+void Text::SetDeltaTimer(double* delt) {
+    deltaTime = delt;
 }
 
 double Text::GetX() {
