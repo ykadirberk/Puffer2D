@@ -22,13 +22,13 @@ Text::~Text() {
 }
 
 void Text::SetPosition(double x, double y) {
-    txt->setPosition(x, y);
-    int width_calc = 0;
-    spec_chara[0]->setPosition(x,y);
-    for (int i = 1; i < spec_chara.size(); i++) {
-        width_calc += dafont->getGlyph(spec_chara[i - 1]->getString().getData()[0], txt->getCharacterSize(), false).advance;
-        spec_chara[i]->setPosition(x + width_calc, y);
-    }
+    txt->setPosition(x, y); /* debug kodu */printf("Text.cpp:25\n");
+    int width_calc = 0; /* debug kodu */printf("Text.cpp:26\n");
+    spec_chara[0]->setPosition(x,y); /* debug kodu */printf("Text.cpp:27\n");
+    for (int i = 1; i < spec_chara.size(); i++) { /* debug kodu */printf("Text.cpp:28\n");
+        width_calc += dafont->getGlyph(spec_chara[i - 1]->getString().getData()[0], txt->getCharacterSize(), false).advance; /* debug kodu */printf("Text.cpp:29\n");
+        spec_chara[i]->setPosition(x + width_calc, y); /* debug kodu */printf("Text.cpp:30\n");
+    } /* debug kodu */printf("Text.cpp:31\n");
 }
 
 void Text::Move(double x, double y) {
