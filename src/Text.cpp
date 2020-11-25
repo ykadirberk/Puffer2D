@@ -2,9 +2,11 @@
 
 Text::Text(sf::RenderWindow* window, sf::Font* font,string text, int size, sf::Color color) {
     stringofthis = text;
+    dafont = font;
     txt = new sf::Text();
     for (int i = 0; i < text.length(); i++) {
         sf::Text *_temp_ = new sf::Text(text[i], *font, size);
+        _temp_->setFillColor(color);
         spec_chara.push_back(_temp_);
     }
     w = window;
@@ -24,13 +26,19 @@ void Text::SetPosition(double x, double y) {
     int width_calc = 0;
     spec_chara[0]->setPosition(x,y);
     for (int i = 1; i < spec_chara.size(); i++) {
-        width_calc += (txt->getFont().getGlyph(int(spec_chara[i - 1]->getString().toAnsiString().c_str()), txt->getCharacterSize(), false).advance);
+        width_calc += dafont->getGlyph(spec_chara[i - 1]->getString().getData()[0], txt->getCharacterSize(), false).advance;
         spec_chara[i]->setPosition(x + width_calc, y);
     }
 }
 
 void Text::Move(double x, double y) {
     txt->move(x, y);
+    int width_calc = 0;
+    spec_chara[0]->setPosition(x,y);
+    for (int i = 1; i < spec_chara.size(); i++) {
+        width_calc += dafont->getGlyph(spec_chara[i - 1]->getString().getData()[0], txt->getCharacterSize(), false).advance;
+        spec_chara[i]->move(x, y);
+    }
 }
 
 void Text::SetDeltaTimer(double* delt) {

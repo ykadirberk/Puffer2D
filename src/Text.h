@@ -23,10 +23,11 @@ class Text {
         bool Draw();
 
     private:
+        sf::Font* dafont = NULL;
         string stringofthis;
         double *deltaTime = 0;
         double timer = 0;
-        double animation_const = 0.1;
+        double animation_const = 0.07;
         int counter = 0;
         bool visibility = true;
         bool slowmode = false;

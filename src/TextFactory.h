@@ -42,10 +42,10 @@ using namespace std;
 
 class TextFactory {
     public:
-        TextFactory(sf::RenderWindow* window,string input, sf::Font* fnt);
+        TextFactory(sf::RenderWindow* window, PlainField* field, string input, sf::Font* fnt);
         ~TextFactory();
 
-        void PrepareTexts();
+        void PrepareTexts(double* delta);
         void DrawTexts();
     private:
 
@@ -55,8 +55,6 @@ class TextFactory {
         PlainField* fieldbox = NULL;
         
         map<char, sf::Color> colormap;
-        
-        vector<string> parted_strings;
         vector<Text*> texts;
         
         sf::Font* p_font;

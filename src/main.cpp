@@ -8,6 +8,8 @@
 #include "Character.h"
 #include "SheetAnimator.h"
 #include "PlayerMovement.h"
+#include "PlainField.h"
+#include "TextFactory.h"
 using namespace std;
 
 
@@ -30,11 +32,23 @@ int main() {
 	//Ekrana yazılması istenen bir yazının tanımlanması
 	Text* writeatext = new Text(window, &font, "Bu bir oyundur.", 18, sf::Color::Yellow);
 	writeatext->SetDeltaTimer(&deltaTime);
+	writeatext->SetPosition(0,0);
 	SheetAnimator* sa = new SheetAnimator("GUI/BUTTON/button.data");
+
+	//PlainField Denemesi
+	PlainField* field = new PlainField(window);
+	field->SetPosition(100,400);
+	field->SetFieldLength(400,500);
+	TextFactory* factory = new TextFactory(window, field, "Merhaba arkadaslar bugunku videomuzda ben ardayla birlikte bu mal programi calistirmaya calisiyorum.", &font);
+	//factory->PrepareTexts(&deltaTime);
+
+
+
+
 
 	//Ekrana çizilmesi istenen buton tanımlaması
 	//!Şu an işlevsiz
-	Button* but = new Button(window, "GUI/BUTTON/button.png",100, 300, 196, 88, 48, 22);
+	Button* but = new Button(window, "GUI/BUTTON/button.png",100, 100, 196, 88, 48, 22);
 
 	//Ekrana çizilmesi istenen karakter tanımlaması
 	//!Şu an işlevsiz
@@ -65,6 +79,7 @@ int main() {
 
 		
 		//? GUI DRAWINGS
+		//factory->DrawTexts();
 		writeatext->Draw(); //yazılması istenen görüntüyü yazdıran fonksiyon
 		but->Draw();
 		window->display(); //pencereyi çizer

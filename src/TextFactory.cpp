@@ -1,11 +1,11 @@
 #include "TextFactory.h"
 
-TextFactory::TextFactory(sf::RenderWindow* window, string input, sf::Font* fnt) {
+TextFactory::TextFactory(sf::RenderWindow* window, PlainField* field, string input, sf::Font* fnt) {
     total_string = input;
     total_string_backup = input;
     p_font = fnt;
     w = window;
-    fieldbox = new PlainField(window);
+    fieldbox = field;
     // color implementation
     // u can add new colors or delete them.
     colormap.insert(pair<char ,sf::Color>(RED,COLOR_RED));
@@ -28,7 +28,7 @@ TextFactory::~TextFactory() {
 
 }
 
-void TextFactory::PrepareTexts() {
+void TextFactory::PrepareTexts(double* delta) {
     colortype = COLOR_WHITE;
     int linecounter = 0; // kaç satır olduğunu tutuyorum (render için gerekli)
     int posYhandler = 0; //satır değişimleri için y'yi tutuyorum
@@ -42,6 +42,7 @@ void TextFactory::PrepareTexts() {
             for (int i = 0; i < total_string.length(); i++) {
                 if (total_string[i] == '\0') { //Eğer string bitmişse
                     Text* back = new Text(w, p_font, total_string, 18, colortype);
+                    back->SetDeltaTimer(delta);
                     back->SetPosition(
                             10 + fieldbox->GetX(),
                             10 +  fieldbox->GetY() + ((back->GetTextObject()->getCharacterSize() + 10)*linecounter)
@@ -59,6 +60,7 @@ void TextFactory::PrepareTexts() {
                     total_string = total_string.substr(lastbreak + 1);
                     lastbreak = 0;
                     Text* back = new Text(w, p_font, firsts, 18, colortype);
+                    back->SetDeltaTimer(delta);
                     back->SetPosition(
                             10 + fieldbox->GetX(),
                             10 +  fieldbox->GetY() + ((back->GetTextObject()->getCharacterSize() + 10)*linecounter)
@@ -82,8 +84,9 @@ void TextFactory::PrepareTexts() {
             for (int i = 0; i < sub_.length(); i++) { // this for loop has the exact same code with string::npos state described above
                if (total_string[i] == '\0') { //Eğer string bitmişse
                     Text* back = new Text(w, p_font, sub_, 18, colortype);
+                    back->SetDeltaTimer(delta);
                     back->SetPosition(
-                            10 + fieldbox->GetX(),
+                            10 + fieldbox->GetX() + textwidth,
                             10 +  fieldbox->GetY() + ((back->GetTextObject()->getCharacterSize() + 10)*linecounter)
                     );
                     if (boldness) {
@@ -99,6 +102,7 @@ void TextFactory::PrepareTexts() {
                     sub_ = sub_.substr(lastbreak + 1);
                     lastbreak = 0;
                     Text* back = new Text(w, p_font, firsts, 18, colortype);
+                    back->SetDeltaTimer(delta);
                     back->SetPosition(
                             10 + fieldbox->GetX() + textwidth,
                             10 +  fieldbox->GetY() + ((back->GetTextObject()->getCharacterSize() + 10)*linecounter)
@@ -108,6 +112,7 @@ void TextFactory::PrepareTexts() {
                     }
                     texts.push_back(back);
                     linecounter++;
+                    textwidth = 0;
                 }
                 if (total_string[i] == ' ') {
                     lastbreak = i;
@@ -120,6 +125,7 @@ void TextFactory::PrepareTexts() {
                 boldness = true;
             } else {
                 colortype = colormap.at(total_string[tend + 1]);
+                total_string = total_string.substr(tend + 2);
             }
         }
 
@@ -130,6 +136,7 @@ void TextFactory::DrawTexts() {
     for (int i = 0; i < texts.size(); i++) {
         texts[i]->Calc();
         if(!texts[i]->Draw()) {
+
             break;
         }
     }
