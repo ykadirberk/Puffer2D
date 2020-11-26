@@ -15,7 +15,6 @@ class Text {
         double GetX();
         double GetY();
         void SetText(string* t);
-        void SetMode(bool n);
         sf::Text* GetTextObject();
 
         void Calc(double delt);
@@ -25,12 +24,10 @@ class Text {
         sf::Font* dafont = NULL;
         string stringofthis;
         double timer = 0;
-        double animation_const = 0.06;
+        double animation_const = 0.05;
         int counter = 0;
         bool visibility = true;
-        bool slowmode = false;
         bool d_draw = false;
-        vector<sf::Text*> spec_chara;
         sf::Text* txt = NULL;
         sf::RenderWindow* w = NULL;
 };
