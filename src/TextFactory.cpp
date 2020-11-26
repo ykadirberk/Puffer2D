@@ -29,9 +29,9 @@ TextFactory::~TextFactory() {
 
 }
 
-void TextFactory::SetDeltaTimer(double* delt) /* {
+void TextFactory::SetDeltaTimer(double* delt) {
     delta = delt;
-} */
+}
 
 void TextFactory::PrepareTexts() {
     colortype = COLOR_WHITE;
@@ -50,7 +50,7 @@ void TextFactory::PrepareTexts() {
                 string _sub = total_string.substr(0, lastbreak); /* debug kodu */printf("TextFactory.cpp:46\n");
                 total_string = total_string.substr(lastbreak); /* debug kodu */printf("TextFactory.cpp:47\n");
                 Text back_(w, p_font, _sub, fontsize, colortype); /* debug kodu */printf("TextFactory.cpp:48\n");
-                back_.SetDeltaTimer(delt); /* debug kodu */printf("TextFactory.cpp:49\n");
+                back_.SetDeltaTimer(delta); /* debug kodu */printf("TextFactory.cpp:49\n");
                 back_.SetPosition(10 + fieldbox->GetX(), 10 + fieldbox->GetY()  + (10 + fontsize)*linecounter); /* debug kodu */printf("TextFactory.cpp:50\n");
                 texts.push_back(&back_); /* debug kodu */printf("TextFactory.cpp:51\n");
                 lastbreak = 0; /* debug kodu */printf("TextFactory.cpp:52\n");
@@ -60,7 +60,7 @@ void TextFactory::PrepareTexts() {
             }
             if (total_string[i] == '\0') { //endline olmadan string biterse ekrana yazdırabilmek için
                 Text back_(w, p_font, total_string, fontsize, colortype); /* debug kodu */printf("TextFactory.cpp:57\n");
-                back_.SetDeltaTimer(delt); /* debug kodu */printf("TextFactory.cpp:58\n");
+                back_.SetDeltaTimer(delta); /* debug kodu */printf("TextFactory.cpp:58\n");
                 back_.SetPosition(10 + fieldbox->GetX(), 10 + fieldbox->GetY()  + (10 + fontsize)*linecounter); /* debug kodu */printf("TextFactory.cpp:59\n");
                 texts.push_back(&back_); /* debug kodu */printf("TextFactory.cpp:60\n");
                 linecounter = 0; /* debug kodu */printf("TextFactory.cpp:61\n");
