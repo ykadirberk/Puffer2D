@@ -21,7 +21,7 @@ int main() {
 	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Hello, world!");
 
 	sf::Clock clock; //zaman kavramını tanımlar
-	sf::Clock clock2;
+	sf::Clock clock2; 
 	double deltaTime = 0; //Zamandaki değişimi tanımladım
 
 	sf::Font font; //font tanımlanır
@@ -32,7 +32,6 @@ int main() {
 	}
 	//Ekrana yazılması istenen bir yazının tanımlanması
 	Text* writeatext = new Text(window, &font, "Bu bir oyundur.", 18, sf::Color::Yellow);
-	writeatext->SetDeltaTimer(&deltaTime);
 	writeatext->SetPosition(0,0);
 	SheetAnimator* sa = new SheetAnimator("GUI/BUTTON/button.data");
 
@@ -42,7 +41,6 @@ int main() {
 	field->SetFieldLength(400,500);
 	TextFactory* factory = new TextFactory(window, field, "Merhaba arkadaslar bugunku videomuzda ben ardayla birlikte bu mal programi calistirmaya calisiyorum.", &font);
 	factory->PrepareTexts();
-	factory->SetDeltaTimer(&deltaTime);
 
 
 

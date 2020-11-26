@@ -46,7 +46,6 @@ class TextFactory {
         ~TextFactory();
 
         void PrepareTexts();
-        void SetDeltaTimer(double* delt);
         void DrawTexts(double deltas);
     private:
 
@@ -66,7 +65,6 @@ class TextFactory {
         string total_string_backup;
         
         double posX, posY, fontsize = 0;
-        double* delta = 0;
 
         bool obotime = false;
         bool boldness = false;

@@ -29,13 +29,6 @@ TextFactory::~TextFactory() {
 
 }
 
-void TextFactory::SetDeltaTimer(double* delt) {
-    delta = delt;
-    for (int i = 0; i < texts.size(); i++) {
-        texts[i]->SetDeltaTimer(delt);
-    }
-}
-
 void TextFactory::PrepareTexts() {
     colortype = COLOR_WHITE;
     int linecounter = 0; // kaç satır olduğunu tutuyorum (render için gerekli) 
@@ -47,13 +40,12 @@ void TextFactory::PrepareTexts() {
         int lastbreak = 0;
         int textwidth;
         for (int i = 0; i < total_string.length(); i++) {
-            if (textwidth < fieldbox->GetWidth()) {/* debug kodu */printf("TextFactory.cpp:43\n"); //endline durumunu kontrol ediyor
-                textwidth += GetCharLength(total_string[i], *p_font, fontsize); /* debug kodu */printf("TextFactory.cpp:44\n");
+            if (textwidth < fieldbox->GetWidth()) { //endline durumunu kontrol ediyor
+                textwidth += GetCharLength(total_string[i], *p_font, fontsize);
             } else { //endline durumunda stringi çekiyor
-                string _sub = total_string.substr(0, lastbreak); /* debug kodu */printf("TextFactory.cpp:46\n");
-                total_string = total_string.substr(lastbreak + 1); /* debug kodu */printf("TextFactory.cpp:47\n");
+                string _sub = total_string.substr(0, lastbreak);
+                total_string = total_string.substr(lastbreak + 1);
                 Text* back_ = new Text(w, p_font, _sub, fontsize, colortype); printf("[DEBUGLOG]%s\n", _sub.c_str());
-                back_->SetDeltaTimer(delta); 
                 back_->SetPosition(10 + fieldbox->GetX(), 10 + fieldbox->GetY()  + (10 + fontsize)*linecounter); 
                 texts.push_back(back_); 
                 lastbreak = 0; 
@@ -63,7 +55,6 @@ void TextFactory::PrepareTexts() {
             }
             if (i == total_string.length() - 1) { //endline olmadan string biterse ekrana yazdırabilmek için
                 Text* back_ = new Text(w, p_font, total_string, fontsize, colortype); 
-                back_->SetDeltaTimer(delta); 
                 back_->SetPosition(10 + fieldbox->GetX(), 10 + fieldbox->GetY()  + (10 + fontsize)*linecounter); 
                 texts.push_back(back_);
                 linecounter = 0;  printf("[DEBUGLOG]%s\n", total_string.c_str());
@@ -96,9 +87,7 @@ void TextFactory::PrepareTexts() {
 void TextFactory::DrawTexts(double deltas) {
     for (int i = 0; i < texts.size(); i++) {
         texts[i]->Calc(deltas);
-        bool state = texts[i]->Draw();
-        //texts[i]->Draw();
-        if(!state) break;
+        if(!texts[i]->Draw()) break;
     }
 }
 
