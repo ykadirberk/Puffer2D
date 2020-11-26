@@ -45,7 +45,8 @@ class TextFactory {
         TextFactory(sf::RenderWindow* window, PlainField* field, string input, sf::Font* fnt);
         ~TextFactory();
 
-        void PrepareTexts(double* delta);
+        void PrepareTexts();
+        void SetDeltaTimer(double* delt);
         void DrawTexts();
     private:
 
@@ -60,10 +61,13 @@ class TextFactory {
         sf::Font* p_font;
         sf::Color colortype;
         sf::RenderWindow* w = NULL;
-
+        
         string total_string;
         string total_string_backup;
-        double posX, posY, fontsize = 0, textsize = 0;
+        
+        double posX, posY, fontsize = 0;
+        double* delta = 0;
+
         bool obotime = false;
         bool boldness = false;
 

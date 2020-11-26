@@ -1,5 +1,6 @@
 #include <string>
 #include <stdio.h>
+#include <iostream>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include "wVector2D.h"
@@ -37,10 +38,11 @@ int main() {
 
 	//PlainField Denemesi
 	PlainField* field = new PlainField(window);
-	field->SetPosition(100,400);
+	field->SetPosition(200,400);
 	field->SetFieldLength(400,500);
 	TextFactory* factory = new TextFactory(window, field, "Merhaba arkadaslar bugunku videomuzda ben ardayla birlikte bu mal programi calistirmaya calisiyorum.", &font);
-	//factory->PrepareTexts(&deltaTime);
+	factory->SetDeltaTimer(&deltaTime);
+	factory->PrepareTexts();
 
 
 
@@ -48,7 +50,7 @@ int main() {
 
 	//Ekrana çizilmesi istenen buton tanımlaması
 	//!Şu an işlevsiz
-	Button* but = new Button(window, "GUI/BUTTON/button.png",100, 100, 196, 88, 48, 22);
+	Button* but = new Button(window, "GUI/BUTTON/button.png",50, 50, 196, 88, 48, 22);
 
 	//Ekrana çizilmesi istenen karakter tanımlaması
 	//!Şu an işlevsiz
@@ -79,7 +81,7 @@ int main() {
 
 		
 		//? GUI DRAWINGS
-		//factory->DrawTexts();
+		factory->DrawTexts();
 		writeatext->Draw(); //yazılması istenen görüntüyü yazdıran fonksiyon
 		but->Draw();
 		window->display(); //pencereyi çizer

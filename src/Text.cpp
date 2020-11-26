@@ -7,6 +7,7 @@ Text::Text(sf::RenderWindow* window, sf::Font* font,string text, int size, sf::C
     for (int i = 0; i < text.length(); i++) {
         sf::Text *_temp_ = new sf::Text(text[i], *font, size);
         _temp_->setFillColor(color);
+        _temp_->setPosition(0,0);
         spec_chara.push_back(_temp_);
     }
     w = window;
@@ -24,10 +25,13 @@ Text::~Text() {
 void Text::SetPosition(double x, double y) {
     txt->setPosition(x, y); /* debug kodu */printf("Text.cpp:25\n");
     int width_calc = 0; /* debug kodu */printf("Text.cpp:26\n");
-    spec_chara[0]->setPosition(x,y); /* debug kodu */printf("Text.cpp:27\n");
-    for (int i = 1; i < spec_chara.size(); i++) { /* debug kodu */printf("Text.cpp:28\n");
-        width_calc += dafont->getGlyph(spec_chara[i - 1]->getString().getData()[0], txt->getCharacterSize(), false).advance; /* debug kodu */printf("Text.cpp:29\n");
-        spec_chara[i]->setPosition(x + width_calc, y); /* debug kodu */printf("Text.cpp:30\n");
+    for (int i = 0; i < spec_chara.size(); i++) { /* debug kodu */printf("Text.cpp:27\n");
+        spec_chara[i]->move(x,y); /* debug kodu */printf("Text.cpp:28\n");
+        if (i + 1 == spec_chara.size()) {
+            break;
+        }
+        width_calc += dafont->getGlyph(stringofthis[i + 1], txt->getCharacterSize(), false).advance; /* debug kodu */printf("Text.cpp:29\n");
+        spec_chara[i + 1]->setPosition(x + width_calc, y); /* debug kodu */printf("Text.cpp:30\n");
     } /* debug kodu */printf("Text.cpp:31\n");
 }
 
@@ -81,6 +85,7 @@ void Text::Calc() {
             counter++;
             timer = 0;
         }
+        printf("%lf\n", *deltaTime);
     } else {
         timer = 0;
     }

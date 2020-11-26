@@ -6,6 +6,7 @@ TextFactory::TextFactory(sf::RenderWindow* window, PlainField* field, string inp
     p_font = fnt;
     w = window;
     fieldbox = field;
+    fontsize = 18;
     // color implementation
     // u can add new colors or delete them.
     colormap.insert(pair<char ,sf::Color>(RED,COLOR_RED));
@@ -28,117 +29,73 @@ TextFactory::~TextFactory() {
 
 }
 
-void TextFactory::PrepareTexts(double* delta) {
-    colortype = COLOR_WHITE; /* debug kodu */printf("TextFactory.cpp:32\n");
-    int linecounter = 0;/* debug kodu */printf("TextFactory.cpp:33\n"); /* debug kodu */ // kaç satır olduğunu tutuyorum (render için gerekli) 
-    int posYhandler = 0;/* debug kodu */printf("TextFactory.cpp:34\n"); //satır değişimleri için y'yi tutuyorum
-    int posXhandler = 0;/* debug kodu */printf("TextFactory.cpp:35\n"); //renk değişimi durumlarında x konumu tutmak
-    size_t tend = 0; /* debug kodu */printf("TextFactory.cpp:36\n"); //format değiştirici karakteri tutuyorum
-    while(1) { /* debug kodu */printf("TextFactory.cpp:37\n");
-        tend = total_string.find('&'); /* debug kodu */printf("TextFactory.cpp:38\n");
-        if (tend == string::npos) { /* debug kodu */printf("TextFactory.cpp:39\n");
-            int lastbreak = 0; /* debug kodu */printf("TextFactory.cpp:40\n");
-            int textwidth; /* debug kodu */printf("TextFactory.cpp:41\n");
-            for (int i = 0; i < total_string.length(); i++) { /* debug kodu */printf("TextFactory.cpp:42\n");
-                if (total_string[i] == '\0') { /* debug kodu */printf("TextFactory.cpp:43\n"); //Eğer string bitmişse 
-                    Text* back = new Text(w, p_font, total_string, 18, colortype); /* debug kodu */printf("TextFactory.cpp:44\n");
-                    back->SetDeltaTimer(delta); /* debug kodu */printf("TextFactory.cpp:45\n");
-                    back->SetPosition(
-                            10 + fieldbox->GetX(),
-                            10 +  fieldbox->GetY() + ((back->GetTextObject()->getCharacterSize() + 10)*linecounter)
-                    ); /* debug kodu */printf("TextFactory.cpp:49\n");
-                    if (boldness) { /* debug kodu */ printf("TextFactory.cpp:50\n");
-                        back->GetTextObject()->setStyle(sf::Text::Bold); /* debug kodu */ printf("TextFactory.cpp:51\n");
-                    } /* debug kodu */ printf("TextFactory.cpp:52\n");
-                    texts.push_back(back); /* debug kodu */ printf("TextFactory.cpp:53\n");
-                    break; /* debug kodu */ printf("TextFactory.cpp:54\n");
-                } /* debug kodu */ printf("TextFactory.cpp:55\n");
-                if (textwidth + GetCharLength(total_string[i], *p_font, fontsize) < fieldbox->GetWidth()) { /* debug kodu */ printf("TextFactory.cpp:56\n");
-                    textwidth += GetCharLength(total_string[i], *p_font, fontsize); /* debug kodu */ printf("TextFactory.cpp:57\n");
-                } else { /* debug kodu */ printf("TextFactory.cpp:58\n");
-                    string firsts = total_string.substr(0,lastbreak); /* debug kodu */ printf("TextFactory.cpp:59\n");
-                    total_string = total_string.substr(lastbreak + 1); /* debug kodu */ printf("TextFactory.cpp:60\n");
-                    lastbreak = 0; /* debug kodu */ printf("TextFactory.cpp:61\n");
-                    Text* back = new Text(w, p_font, firsts, 18, colortype); /* debug kodu */ printf("TextFactory.cpp:62\n");
-                    back->SetDeltaTimer(delta); /* debug kodu */ printf("TextFactory.cpp:63\n");
-                    back->SetPosition(
-                            10 + fieldbox->GetX(),
-                            10 + fieldbox->GetY() + (28*linecounter)
-                    ); /* debug kodu */ printf("TextFactory.cpp:67\n");
-                    if (boldness) { /* debug kodu */ printf("TextFactory.cpp:68\n");
-                        back->GetTextObject()->setStyle(sf::Text::Bold); /* debug kodu */ printf("TextFactory.cpp:69\n");
-                    } /* debug kodu */ printf("TextFactory.cpp:70\n");
-                    texts.push_back(back); /* debug kodu */ printf("TextFactory.cpp:71\n");
-                    linecounter++; /* debug kodu */ printf("TextFactory.cpp:72\n");
-                } /* debug kodu */ printf("TextFactory.cpp:73\n");
-                if (total_string[i] == ' ') { /* debug kodu */ printf("TextFactory.cpp:74\n");
-                    lastbreak = i; /* debug kodu */ printf("TextFactory.cpp:75\n");
-                } /* debug kodu */ printf("TextFactory.cpp:76\n");
-                /* debug kodu */ printf("TextFactory.cpp:77\n");
+void TextFactory::SetDeltaTimer(double* delt) {
+    delta = delt;
+}
+
+void TextFactory::PrepareTexts() {
+    colortype = COLOR_WHITE;
+    int linecounter = 0; // kaç satır olduğunu tutuyorum (render için gerekli) 
+    int posYhandler = 0; //satır değişimleri için y'yi tutuyorum
+    int posXhandler = 0; //renk değişimi durumlarında x konumu tutmak
+    size_t tend = 0; //format değiştirici karakteri tutuyorum
+    tend = total_string.find('&'); 
+    if (tend == string::npos) { 
+        int lastbreak = 0;
+        int textwidth;
+        for (int i = 0; i < total_string.length(); i++) {
+            if (textwidth < fieldbox->GetWidth()) {/* debug kodu */printf("TextFactory.cpp:43\n"); //endline durumunu kontrol ediyor
+                textwidth += GetCharLength(total_string[i], *p_font, fontsize); /* debug kodu */printf("TextFactory.cpp:44\n");
+            } else { //endline durumunda stringi çekiyor
+                string _sub = total_string.substr(0, lastbreak); /* debug kodu */printf("TextFactory.cpp:46\n");
+                total_string = total_string.substr(lastbreak); /* debug kodu */printf("TextFactory.cpp:47\n");
+                Text back_(w, p_font, _sub, fontsize, colortype); /* debug kodu */printf("TextFactory.cpp:48\n");
+                back_.SetDeltaTimer(delta); /* debug kodu */printf("TextFactory.cpp:49\n");
+                back_.SetPosition(10 + fieldbox->GetX(), 10 + fieldbox->GetY()  + (10 + fontsize)*linecounter); /* debug kodu */printf("TextFactory.cpp:50\n");
+                texts.push_back(&back_); /* debug kodu */printf("TextFactory.cpp:51\n");
+                lastbreak = 0; /* debug kodu */printf("TextFactory.cpp:52\n");
+                textwidth = 0;
+                i = 0; /* debug kodu */printf("TextFactory.cpp:53\n");
+                linecounter++; /* debug kodu */printf("TextFactory.cpp:54\n");
             }
-        } else {
-            int lastbreak = 0;
-            int textwidth = 0;
-            int lastextwidth = 0;
-            string sub_ = total_string.substr(0, tend);
-            for (int i = 0; i < sub_.length(); i++) { // this for loop has the exact same code with string::npos state described above
-               if (total_string[i] == '\0') { //Eğer string bitmişse
-                    Text* back = new Text(w, p_font, sub_, 18, colortype);
-                    back->SetDeltaTimer(delta);
-                    back->SetPosition(
-                            10 + fieldbox->GetX() + textwidth,
-                            10 +  fieldbox->GetY() + ((back->GetTextObject()->getCharacterSize() + 10)*linecounter)
-                    );
-                    if (boldness) {
-                        back->GetTextObject()->setStyle(sf::Text::Bold);
-                    }
-                    texts.push_back(back);
-                    break;
-                }
-                if (textwidth + GetCharLength(sub_[i], *p_font, fontsize) < fieldbox->GetWidth()) {
-                    textwidth += GetCharLength(sub_[i], *p_font, fontsize);
-                } else {
-                    string firsts = sub_.substr(0,lastbreak);
-                    sub_ = sub_.substr(lastbreak + 1);
-                    lastbreak = 0;
-                    Text* back = new Text(w, p_font, firsts, 18, colortype);
-                    back->SetDeltaTimer(delta);
-                    back->SetPosition(
-                            10 + fieldbox->GetX() + textwidth,
-                            10 +  fieldbox->GetY() + ((back->GetTextObject()->getCharacterSize() + 10)*linecounter)
-                    );
-                    if (boldness) {
-                        back->GetTextObject()->setStyle(sf::Text::Bold);
-                    }
-                    texts.push_back(back);
-                    linecounter++;
-                    textwidth = 0;
-                }
-                if (total_string[i] == ' ') {
-                    lastbreak = i;
-                }
+            if (total_string[i] == '\0') { //endline olmadan string biterse ekrana yazdırabilmek için
+                Text back_(w, p_font, total_string, fontsize, colortype); /* debug kodu */printf("TextFactory.cpp:57\n");
+                back_.SetDeltaTimer(delta); /* debug kodu */printf("TextFactory.cpp:58\n");
+                back_.SetPosition(10 + fieldbox->GetX(), 10 + fieldbox->GetY()  + (10 + fontsize)*linecounter); /* debug kodu */printf("TextFactory.cpp:59\n");
+                texts.push_back(&back_); /* debug kodu */printf("TextFactory.cpp:60\n");
+                linecounter = 0; /* debug kodu */printf("TextFactory.cpp:61\n");
             }
-            if (total_string[tend + 1] == 'e') {
-                colortype = COLOR_WHITE;
-                boldness = false;
-            } else if (total_string[tend + 1] == 'f') {
-                boldness = true;
-            } else {
-                colortype = colormap.at(total_string[tend + 1]);
-                total_string = total_string.substr(tend + 2);
+            if (total_string[i] == ' ') { //kelimeleri ayırmamak için boşlukların konumunu tutuyor
+                lastbreak = i;
             }
         }
+        
+    } else {
+        int lastbreak = 0;
+        int textwidth = 0;
+        int lastextwidth = 0;
+        string sub_ = total_string.substr(0, tend);
+        for (int i = 0; i < sub_.length(); i++) { // this for loop has the exact same code with string::npos state described above
 
+        }
+        if (total_string[tend + 1] == 'e') {
+            colortype = COLOR_WHITE;
+            boldness = false;
+        } else if (total_string[tend + 1] == 'f') {
+            boldness = true;
+        } else {
+            colortype = colormap.at(total_string[tend + 1]);
+            total_string = total_string.substr(tend + 2);
+        }
     }
 }
 
 void TextFactory::DrawTexts() {
     for (int i = 0; i < texts.size(); i++) {
         texts[i]->Calc();
-        if(!texts[i]->Draw()) {
-
-            break;
-        }
+        bool state = texts[i]->Draw();
+        texts[i]->Draw();
+        if(!state) break;
     }
 }
 
