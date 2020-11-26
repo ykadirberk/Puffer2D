@@ -66,7 +66,7 @@ class TextFactory {
         string total_string_backup;
         
         double posX, posY, fontsize = 0;
-        double* delta = 0;
+        double* delt = 0;
 
         bool obotime = false;
         bool boldness = false;
