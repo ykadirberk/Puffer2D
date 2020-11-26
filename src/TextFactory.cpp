@@ -31,6 +31,9 @@ TextFactory::~TextFactory() {
 
 void TextFactory::SetDeltaTimer(double* delt) {
     delta = delt;
+    for (int i = 0; i < texts.size(); i++) {
+        texts[i]->SetDeltaTimer(delt);
+    }
 }
 
 void TextFactory::PrepareTexts() {
@@ -48,22 +51,22 @@ void TextFactory::PrepareTexts() {
                 textwidth += GetCharLength(total_string[i], *p_font, fontsize); /* debug kodu */printf("TextFactory.cpp:44\n");
             } else { //endline durumunda stringi çekiyor
                 string _sub = total_string.substr(0, lastbreak); /* debug kodu */printf("TextFactory.cpp:46\n");
-                total_string = total_string.substr(lastbreak); /* debug kodu */printf("TextFactory.cpp:47\n");
-                Text back_(w, p_font, _sub, fontsize, colortype); /* debug kodu */printf("TextFactory.cpp:48\n");
-                back_.SetDeltaTimer(delta); /* debug kodu */printf("TextFactory.cpp:49\n");
-                back_.SetPosition(10 + fieldbox->GetX(), 10 + fieldbox->GetY()  + (10 + fontsize)*linecounter); /* debug kodu */printf("TextFactory.cpp:50\n");
-                texts.push_back(&back_); /* debug kodu */printf("TextFactory.cpp:51\n");
-                lastbreak = 0; /* debug kodu */printf("TextFactory.cpp:52\n");
+                total_string = total_string.substr(lastbreak + 1); /* debug kodu */printf("TextFactory.cpp:47\n");
+                Text* back_ = new Text(w, p_font, _sub, fontsize, colortype); printf("[DEBUGLOG]%s\n", _sub.c_str());
+                back_->SetDeltaTimer(delta); 
+                back_->SetPosition(10 + fieldbox->GetX(), 10 + fieldbox->GetY()  + (10 + fontsize)*linecounter); 
+                texts.push_back(back_); 
+                lastbreak = 0; 
                 textwidth = 0;
-                i = 0; /* debug kodu */printf("TextFactory.cpp:53\n");
-                linecounter++; /* debug kodu */printf("TextFactory.cpp:54\n");
+                i = 0; 
+                linecounter++; 
             }
-            if (total_string[i] == '\0') { //endline olmadan string biterse ekrana yazdırabilmek için
-                Text back_(w, p_font, total_string, fontsize, colortype); /* debug kodu */printf("TextFactory.cpp:57\n");
-                back_.SetDeltaTimer(delta); /* debug kodu */printf("TextFactory.cpp:58\n");
-                back_.SetPosition(10 + fieldbox->GetX(), 10 + fieldbox->GetY()  + (10 + fontsize)*linecounter); /* debug kodu */printf("TextFactory.cpp:59\n");
-                texts.push_back(&back_); /* debug kodu */printf("TextFactory.cpp:60\n");
-                linecounter = 0; /* debug kodu */printf("TextFactory.cpp:61\n");
+            if (i == total_string.length() - 1) { //endline olmadan string biterse ekrana yazdırabilmek için
+                Text* back_ = new Text(w, p_font, total_string, fontsize, colortype); 
+                back_->SetDeltaTimer(delta); 
+                back_->SetPosition(10 + fieldbox->GetX(), 10 + fieldbox->GetY()  + (10 + fontsize)*linecounter); 
+                texts.push_back(back_);
+                linecounter = 0;  printf("[DEBUGLOG]%s\n", total_string.c_str());
             }
             if (total_string[i] == ' ') { //kelimeleri ayırmamak için boşlukların konumunu tutuyor
                 lastbreak = i;
@@ -90,11 +93,11 @@ void TextFactory::PrepareTexts() {
     }
 }
 
-void TextFactory::DrawTexts() {
+void TextFactory::DrawTexts(double deltas) {
     for (int i = 0; i < texts.size(); i++) {
-        texts[i]->Calc();
+        texts[i]->Calc(deltas);
         bool state = texts[i]->Draw();
-        texts[i]->Draw();
+        //texts[i]->Draw();
         if(!state) break;
     }
 }

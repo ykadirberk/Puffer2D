@@ -47,7 +47,7 @@ class TextFactory {
 
         void PrepareTexts();
         void SetDeltaTimer(double* delt);
-        void DrawTexts();
+        void DrawTexts(double deltas);
     private:
 
         inline int GetCharLength(char &letter, sf::Font &font, int font_size);

@@ -19,7 +19,7 @@ class Text {
         void SetMode(bool n);
         sf::Text* GetTextObject();
 
-        void Calc();
+        void Calc(double delt);
         bool Draw();
 
     private:
@@ -27,7 +27,7 @@ class Text {
         string stringofthis;
         double *deltaTime = 0;
         double timer = 0;
-        double animation_const = 0.07;
+        double animation_const = 0.06;
         int counter = 0;
         bool visibility = true;
         bool slowmode = false;

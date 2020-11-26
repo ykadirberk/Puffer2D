@@ -41,8 +41,8 @@ int main() {
 	field->SetPosition(200,400);
 	field->SetFieldLength(400,500);
 	TextFactory* factory = new TextFactory(window, field, "Merhaba arkadaslar bugunku videomuzda ben ardayla birlikte bu mal programi calistirmaya calisiyorum.", &font);
-	factory->SetDeltaTimer(&deltaTime);
 	factory->PrepareTexts();
+	factory->SetDeltaTimer(&deltaTime);
 
 
 
@@ -74,14 +74,14 @@ int main() {
 		//? CALCULATIONS
 		but->Calculations();
 		cha->Calculate();
-		writeatext->Calc();
+		writeatext->Calc(deltaTime);
 
 		window->clear(); //görüntüyü temizler (yoksa önceki frame'den görüntü kalır)
 		//? GAME DRAWINGS
 
 		
 		//? GUI DRAWINGS
-		factory->DrawTexts();
+		factory->DrawTexts(deltaTime);
 		writeatext->Draw(); //yazılması istenen görüntüyü yazdıran fonksiyon
 		but->Draw();
 		window->display(); //pencereyi çizer

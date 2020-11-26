@@ -78,14 +78,14 @@ bool Text::Draw() {
     return d_draw;
 }
 
-void Text::Calc() {
-    timer += *deltaTime;
+void Text::Calc(double delt) {
+    timer += delt;
     if (!d_draw) {
         if (timer >= animation_const) {
             counter++;
             timer = 0;
         }
-        printf("%lf\n", *deltaTime);
+        //printf("%lf\n", delt);
     } else {
         timer = 0;
     }
