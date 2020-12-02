@@ -21,7 +21,6 @@ int main() {
 	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Hello, world!");
 
 	sf::Clock clock; //zaman kavramını tanımlar
-	sf::Clock clock2; 
 	double deltaTime = 0; //Zamandaki değişimi tanımladım
 
 	sf::Font font; //font tanımlanır
@@ -38,13 +37,9 @@ int main() {
 	//PlainField Denemesi
 	PlainField* field = new PlainField(window);
 	field->SetPosition(200,400);
-	field->SetFieldLength(400,500);
-	TextFactory* factory = new TextFactory(window, field, "Merhaba arkadaslar bugunku videomuzda ben ardayla birlikte bu mal programi calistirmaya calisiyorum.", &font);
+	field->SetFieldLength(500,500);
+	TextFactory* factory = new TextFactory(window, field, "Merhaba arkadaslar &7bugunku &evideomuzda &1ben &4arda&eyla birlikte bu mal programi calistirmaya calisiyorum.", &font);
 	factory->PrepareTexts();
-
-
-
-
 
 	//Ekrana çizilmesi istenen buton tanımlaması
 	//!Şu an işlevsiz
@@ -55,7 +50,8 @@ int main() {
 	Character* cha = new Character(window, "character-tiles.png", 600, 100, 180, 160);
 	PlayerMovement* mov = new PlayerMovement(cha->GetSprite());
 	cha->SetMovementClass(mov);
-	
+
+	//?GAME LOOP
 	while(window->isOpen()) {
 		deltaTime = clock.getElapsedTime().asSeconds(); //zamandaki değişimi buldum
 		clock.restart();  //zamandaki değişimi bulabilmek için renderdan önce ve son kayıttan sonra zaman değişkenini sıfırladım
@@ -65,7 +61,6 @@ int main() {
 		while(window->pollEvent(event)) {
 			if(event.type == sf::Event::Closed)
 				window->close();
-
 		}
 
 		//but->Move(100*deltaTime, 100*deltaTime);

@@ -15,6 +15,7 @@ class Text {
         double GetX();
         double GetY();
         void SetText(string* t);
+        void SetBoldness(bool b);
         sf::Text* GetTextObject();
 
         void Calc(double delt);

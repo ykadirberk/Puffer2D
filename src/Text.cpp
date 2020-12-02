@@ -36,6 +36,14 @@ void Text::SetText(string* t) {
     txt->setString(*t);
 }
 
+void Text::SetBoldness(bool b) {
+    if (b) {
+        txt->setStyle(sf::Text::Bold);
+    } else {
+        txt->setStyle(sf::Text::Regular);
+    }
+}
+
 sf::Text* Text::GetTextObject() {
     return txt;
 }

@@ -6,7 +6,7 @@ TextFactory::TextFactory(sf::RenderWindow* window, PlainField* field, string inp
     p_font = fnt;
     w = window;
     fieldbox = field;
-    fontsize = 18;
+    fontsize = 16;
     // color implementation
     // u can add new colors or delete them.
     colormap.insert(pair<char ,sf::Color>(RED,COLOR_RED));
@@ -46,8 +46,8 @@ void TextFactory::PrepareTexts() {
                 string _sub = total_string.substr(0, lastbreak);
                 total_string = total_string.substr(lastbreak + 1);
                 Text* back_ = new Text(w, p_font, _sub, fontsize, colortype); printf("[DEBUGLOG]%s\n", _sub.c_str());
-                back_->SetPosition(10 + fieldbox->GetX(), 10 + fieldbox->GetY()  + (10 + fontsize)*linecounter); 
-                texts.push_back(back_); 
+                back_->SetPosition(10 + fieldbox->GetX(), 10 + fieldbox->GetY()  + (((10 / 18) + 1) * fontsize)*linecounter); 
+                texts.push_back(back_);
                 lastbreak = 0; 
                 textwidth = 0;
                 i = 0; 
@@ -55,7 +55,7 @@ void TextFactory::PrepareTexts() {
             }
             if (i == total_string.length() - 1) { //endline olmadan string biterse ekrana yazdırabilmek için
                 Text* back_ = new Text(w, p_font, total_string, fontsize, colortype); 
-                back_->SetPosition(10 + fieldbox->GetX(), 10 + fieldbox->GetY()  + (10 + fontsize)*linecounter); 
+                back_->SetPosition(10 + fieldbox->GetX(), 10 + fieldbox->GetY()  + (((10 / 18) + 1) * fontsize)*linecounter);  
                 texts.push_back(back_);
                 linecounter = 0;  printf("[DEBUGLOG]%s\n", total_string.c_str());
             }
@@ -68,10 +68,72 @@ void TextFactory::PrepareTexts() {
         int lastbreak = 0;
         int textwidth = 0;
         int lastextwidth = 0;
-        string sub_ = total_string.substr(0, tend);
-        for (int i = 0; i < sub_.length(); i++) { // this for loop has the exact same code with string::npos state described above
-
+        sf::Color tempColor = colortype;
+        bool tempBold = boldness;
+        vector<string> lines;
+        for (int i = 0; i < total_string.length(); i++) {
+            if (textwidth < fieldbox->GetWidth()) { //endline durumunu kontrol ediyor
+                textwidth += GetCharLength(total_string[i], *p_font, fontsize);
+            } else {
+                string firsts = total_string.substr(0, lastbreak);
+                total_string = total_string.substr(lastbreak + 1);
+                i = 0;
+                lastbreak = 0;
+                textwidth = 0;
+                lines.push_back(firsts); printf("[DEBUGLOG-C]%s\n", firsts.c_str());
+            }
+            if (i == total_string.length() - 1) {
+                lines.push_back(total_string); printf("[DEBUGLOG-C]%s\n", total_string.c_str());
+            }
+            if (total_string[i] == ' ') {
+                lastbreak = i;
+            } 
         }
+
+        for (int i = 0; i < lines.size(); i++) {
+            size_t ptfound = lines[i].find_first_of('&');
+            if (ptfound != string::npos) {
+                while (ptfound != string::npos) {
+                    if (lines[i][ptfound + 1] == 'e') {
+                        tempColor = COLOR_WHITE;
+                        tempBold = false;
+                    } else if (lines[i][ptfound + 1] == 'f') {
+                        tempBold = true;
+                    } else {
+                        tempColor = colormap.at(lines[i][ptfound + 1]);
+                    }
+
+                    string tempStr = lines[i].substr(0,ptfound);
+                    if (lines[i].length() >= ptfound +2) {
+                        lines[i] = lines[i].substr(ptfound + 2);
+                    }
+                    Text* tempTx = new Text(w, p_font, tempStr, fontsize, colortype); 
+                    tempTx->SetPosition(10 + fieldbox->GetX() + lastextwidth, 10 + fieldbox->GetY()  + (((10 / 18) + 1) * fontsize)*i);
+                    tempTx->SetBoldness(boldness);
+                    texts.push_back(tempTx);
+                    for(int j = 0; j < tempStr.length(); j++) {
+                        lastextwidth += GetCharLength(tempStr[j], *p_font, fontsize);
+                    }
+                    boldness = tempBold;
+                    colortype = tempColor;
+                    ptfound = lines[i].find_first_of('&');
+                }
+                Text* tempTx = new Text(w, p_font, lines[i], fontsize, colortype);
+                tempTx->SetPosition(10 + fieldbox->GetX() + lastextwidth, 10 + fieldbox->GetY()  + (((10 / 18) + 1) * fontsize)*i);
+                tempTx->SetBoldness(boldness);
+                texts.push_back(tempTx);
+            } else {
+                Text* tempTx = new Text(w, p_font, lines[i], fontsize, colortype);
+                tempTx->SetPosition(10 + fieldbox->GetX() + lastextwidth, 10 + fieldbox->GetY()  + (((10 / 18) + 1) * fontsize)*i);
+                tempTx->SetBoldness(boldness);
+                texts.push_back(tempTx);
+            }
+            lastextwidth = 0;
+        }
+        
+        
+        
+        /*
         if (total_string[tend + 1] == 'e') {
             colortype = COLOR_WHITE;
             boldness = false;
@@ -80,7 +142,7 @@ void TextFactory::PrepareTexts() {
         } else {
             colortype = colormap.at(total_string[tend + 1]);
             total_string = total_string.substr(tend + 2);
-        }
+        }*/
     }
 }
 
