@@ -49,7 +49,7 @@ class TextFactory {
         void DrawTexts(double deltas);
     private:
 
-        inline int GetCharLength(char &letter, sf::Font &font, int font_size);
+        inline int GetCharLength(char &letter, sf::Font &font, int font_size, bool boldnesss);
         inline string CalculateLineLength(string ms);
 
         PlainField* fieldbox = NULL;

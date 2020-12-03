@@ -38,8 +38,9 @@ int main() {
 	PlainField* field = new PlainField(window);
 	field->SetPosition(200,400);
 	field->SetFieldLength(500,500);
-	TextFactory* factory = new TextFactory(window, field, "Merhaba arkadaslar &7bugunku &evideomuzda &1ben &4arda&eyla birlikte bu mal programi calistirmaya calisiyorum.", &font);
+	TextFactory* factory = new TextFactory(window, field, "Merhaba arkadaslar &7bugunku &evideomuzda &1&fben &4arda&eyla birlikte &0bu mal &fprogrami calistirmaya &ecalisiyorum.", &font);
 	factory->PrepareTexts();
+
 
 	//Ekrana çizilmesi istenen buton tanımlaması
 	//!Şu an işlevsiz

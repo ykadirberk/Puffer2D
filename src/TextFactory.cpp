@@ -41,12 +41,12 @@ void TextFactory::PrepareTexts() {
         int textwidth;
         for (int i = 0; i < total_string.length(); i++) {
             if (textwidth < fieldbox->GetWidth()) { //endline durumunu kontrol ediyor
-                textwidth += GetCharLength(total_string[i], *p_font, fontsize);
+                textwidth += GetCharLength(total_string[i], *p_font, fontsize, boldness);
             } else { //endline durumunda stringi çekiyor
                 string _sub = total_string.substr(0, lastbreak);
                 total_string = total_string.substr(lastbreak + 1);
                 Text* back_ = new Text(w, p_font, _sub, fontsize, colortype); printf("[DEBUGLOG]%s\n", _sub.c_str());
-                back_->SetPosition(10 + fieldbox->GetX(), 10 + fieldbox->GetY()  + (((10 / 18) + 1) * fontsize)*linecounter); 
+                back_->SetPosition(10 + fieldbox->GetX(), 10 + fieldbox->GetY()  + (((6.0 / 18.0) + 1) * fontsize)*linecounter); 
                 texts.push_back(back_);
                 lastbreak = 0; 
                 textwidth = 0;
@@ -55,7 +55,7 @@ void TextFactory::PrepareTexts() {
             }
             if (i == total_string.length() - 1) { //endline olmadan string biterse ekrana yazdırabilmek için
                 Text* back_ = new Text(w, p_font, total_string, fontsize, colortype); 
-                back_->SetPosition(10 + fieldbox->GetX(), 10 + fieldbox->GetY()  + (((10 / 18) + 1) * fontsize)*linecounter);  
+                back_->SetPosition(10 + fieldbox->GetX(), 10 + fieldbox->GetY()  + (((6.0 / 18.0) + 1) * fontsize)*linecounter);  
                 texts.push_back(back_);
                 linecounter = 0;  printf("[DEBUGLOG]%s\n", total_string.c_str());
             }
@@ -73,7 +73,10 @@ void TextFactory::PrepareTexts() {
         vector<string> lines;
         for (int i = 0; i < total_string.length(); i++) {
             if (textwidth < fieldbox->GetWidth()) { //endline durumunu kontrol ediyor
-                textwidth += GetCharLength(total_string[i], *p_font, fontsize);
+                if (total_string[i] == '&' && total_string.length() < i + 2) {
+                    i += 2;
+                }
+                textwidth += GetCharLength(total_string[i], *p_font, fontsize, boldness);
             } else {
                 string firsts = total_string.substr(0, lastbreak);
                 total_string = total_string.substr(lastbreak + 1);
@@ -108,41 +111,28 @@ void TextFactory::PrepareTexts() {
                         lines[i] = lines[i].substr(ptfound + 2);
                     }
                     Text* tempTx = new Text(w, p_font, tempStr, fontsize, colortype); 
-                    tempTx->SetPosition(10 + fieldbox->GetX() + lastextwidth, 10 + fieldbox->GetY()  + (((10 / 18) + 1) * fontsize)*i);
+                    tempTx->SetPosition(10 + fieldbox->GetX() + lastextwidth, 10 + fieldbox->GetY()  + (((6.0 / 18.0) + 1) * fontsize)*i);
                     tempTx->SetBoldness(boldness);
                     texts.push_back(tempTx);
                     for(int j = 0; j < tempStr.length(); j++) {
-                        lastextwidth += GetCharLength(tempStr[j], *p_font, fontsize);
+                        lastextwidth += GetCharLength(tempStr[j], *p_font, fontsize, boldness);
                     }
                     boldness = tempBold;
                     colortype = tempColor;
                     ptfound = lines[i].find_first_of('&');
                 }
                 Text* tempTx = new Text(w, p_font, lines[i], fontsize, colortype);
-                tempTx->SetPosition(10 + fieldbox->GetX() + lastextwidth, 10 + fieldbox->GetY()  + (((10 / 18) + 1) * fontsize)*i);
+                tempTx->SetPosition(10 + fieldbox->GetX() + lastextwidth, 10 + fieldbox->GetY()  + (((6.0 / 18.0) + 1) * fontsize)*i);
                 tempTx->SetBoldness(boldness);
                 texts.push_back(tempTx);
             } else {
                 Text* tempTx = new Text(w, p_font, lines[i], fontsize, colortype);
-                tempTx->SetPosition(10 + fieldbox->GetX() + lastextwidth, 10 + fieldbox->GetY()  + (((10 / 18) + 1) * fontsize)*i);
+                tempTx->SetPosition(10 + fieldbox->GetX() + lastextwidth, 10 + fieldbox->GetY()  + (((6.0 / 18.0) + 1) * fontsize)*i);
                 tempTx->SetBoldness(boldness);
                 texts.push_back(tempTx);
             }
             lastextwidth = 0;
         }
-        
-        
-        
-        /*
-        if (total_string[tend + 1] == 'e') {
-            colortype = COLOR_WHITE;
-            boldness = false;
-        } else if (total_string[tend + 1] == 'f') {
-            boldness = true;
-        } else {
-            colortype = colormap.at(total_string[tend + 1]);
-            total_string = total_string.substr(tend + 2);
-        }*/
     }
 }
 
@@ -153,6 +143,6 @@ void TextFactory::DrawTexts(double deltas) {
     }
 }
 
-inline int TextFactory::GetCharLength(char &letter, sf::Font &font, int font_size) {
-    return font.getGlyph(int(letter), font_size, false).advance;
+inline int TextFactory::GetCharLength(char &letter, sf::Font &font, int font_size, bool boldnesss) {
+    return font.getGlyph(int(letter), font_size, boldness).advance;
 }
