@@ -2,11 +2,12 @@
 #include <string>
 #include <stdio.h>
 #include <SFML/Graphics.hpp>
+#include "AnimationData.h"
 using std::string;
 
 class Button {
     public:
-        Button(sf::RenderWindow* window,string path ,double sX, double sY, double width, double height, double xOffset, double yOffset);
+        Button(sf::RenderWindow* window,string path ,double sX, double sY, double width, double height, string datapath);
         ~Button();
 
         void SetPosition(double x, double y);
@@ -18,6 +19,7 @@ class Button {
         void Calculations();
         void Draw();
     private:
+        AnimationData* adata = NULL;
         sf::RenderWindow* w = NULL;
         sf::Texture* texture = NULL;
         sf::Sprite* sprite = NULL;

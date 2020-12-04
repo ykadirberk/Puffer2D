@@ -1,8 +1,9 @@
 #include "Button.h"
 
-Button::Button(sf::RenderWindow* window,string path ,double sX, double sY, double width, double height, double xOffset, double yOffset) {
+Button::Button(sf::RenderWindow* window,string path ,double sX, double sY, double width, double height, string datapath) {
     w = window;
     texture = new sf::Texture();
+    adata = new AnimationData(datapath);
     if (!texture->loadFromFile(path)) { //! Texture dosyadan yüklenir. Bu kod daha sonra değiştirilecek.
     	printf("[LOG] Couldn't load button texture. \n"); //texture yüklenemezse hata mesajı
 	} else {
@@ -10,8 +11,8 @@ Button::Button(sf::RenderWindow* window,string path ,double sX, double sY, doubl
 	}
 
     //Yüklenen Texture'un gerçek büyüklükleri kaydediliyor.
-    oW = xOffset; 
-    oH = yOffset;
+    oW = adata->GetScaleRule().x;
+    oH = adata->GetScaleRule().y;
     
     //Ekrana çizilmesi istenen büyüklükler kaydediliyor.
     iWidth = width;
@@ -21,9 +22,9 @@ Button::Button(sf::RenderWindow* window,string path ,double sX, double sY, doubl
     iX = sX;
     iY = sY;
 
-    sprite = new sf::Sprite(*texture, sf::IntRect(0,0,48,22));
+    sprite = new sf::Sprite(*texture, sf::IntRect(0,0,oW,oH));
     //Sprite elle girilen büyüklük desteklemediği için scale cinsine çevirerek istenen boyuta getiriliyor.
-    sprite->setScale(iWidth/oW, iHeight/oH); 
+    sprite->setScale(iWidth/oW, iHeight/oH);
     sprite->setPosition(sX, sY);
 }
 

@@ -7,10 +7,11 @@
 #include "Button.h"
 #include "Text.h"
 #include "Character.h"
-#include "SheetAnimator.h"
+#include "AnimationData.h"
 #include "PlayerMovement.h"
 #include "PlainField.h"
 #include "TextFactory.h"
+#include <windows.h>
 using namespace std;
 
 
@@ -32,7 +33,6 @@ int main() {
 	//Ekrana yazılması istenen bir yazının tanımlanması
 	Text* writeatext = new Text(window, &font, "Bu bir oyundur.", 18, sf::Color::Yellow);
 	writeatext->SetPosition(0,0);
-	SheetAnimator* sa = new SheetAnimator("GUI/BUTTON/button.data");
 
 	//PlainField Denemesi
 	PlainField* field = new PlainField(window);
@@ -44,11 +44,11 @@ int main() {
 
 	//Ekrana çizilmesi istenen buton tanımlaması
 	//!Şu an işlevsiz
-	Button* but = new Button(window, "GUI/BUTTON/button.png",50, 50, 196, 88, 48, 22);
+	Button* but = new Button(window, "GUI/BUTTON/button.png",50, 50, 196, 88, "GUI/BUTTON/button.data");
 
 	//Ekrana çizilmesi istenen karakter tanımlaması
 	//!Şu an işlevsiz
-	Character* cha = new Character(window, "character-tiles.png", 600, 100, 180, 160);
+	Character* cha = new Character(window, "INGAME/PLAYER/character-tiles.png", 600, 100, 180, 160);
 	PlayerMovement* mov = new PlayerMovement(cha->GetSprite());
 	cha->SetMovementClass(mov);
 
@@ -63,7 +63,7 @@ int main() {
 			if(event.type == sf::Event::Closed)
 				window->close();
 		}
-
+		
 		//but->Move(100*deltaTime, 100*deltaTime);
 		//? CALCULATIONS
 		but->Calculations();
@@ -79,6 +79,7 @@ int main() {
 		writeatext->Draw(); //yazılması istenen görüntüyü yazdıran fonksiyon
 		but->Draw();
 		window->display(); //pencereyi çizer
+		Sleep(1000/60);
 	}
 	return 0;
 }

@@ -1,8 +1,8 @@
-#everything that is written after '#' symbol will be excluded
-48 22 #template-size
-[REGULAR]
+48 22
+[REGULAR] 0
 0 0
-[HOVER]
+[HOVER] 0
 0 22
-[PRESSED]
+[PRESSED] 0
 0 44
+-END-
