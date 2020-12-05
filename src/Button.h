@@ -23,7 +23,6 @@ class Button {
         Animator* animator = NULL;
         sf::RenderWindow* w = NULL;
         sf::Sprite* sprite = NULL;
-        double oW = 0, oH = 0; //Texture'un yüklendiği haldeki büyüklüğü
         double iWidth = 0, iHeight = 0; //Sprite'ın olmasını istediğimiz büyüklüğü
         double iX = 0, iY = 0; //Sprite'ın olmasını istediğimiz konumu
         double mX = 0, mY = 0; //Mouse pozisyonu kaydediliyor.

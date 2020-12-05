@@ -26,14 +26,14 @@ void Animator::CalculateSprite(string key, double deltatime) {
     } else {
         timer += deltatime;
         if (timer >= anidata->at(key)[0].x) {
-            if (index > anidata->at(key).size()) {
+            if (index == anidata->at(key).size() - 1) {
                 index = 1;
             } else {
                 index++;
             }
-            calcsp->setTextureRect(sf::IntRect(anidata->at(key)[index].x, anidata->at(key)[index].y, anidata->GetScaleRule().x, anidata->GetScaleRule().y));
             timer = 0;
         }
+        calcsp->setTextureRect(sf::IntRect(anidata->at(key)[index].x, anidata->at(key)[index].y, anidata->GetScaleRule().x, anidata->GetScaleRule().y));
     }
 }
 

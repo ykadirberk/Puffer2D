@@ -2,13 +2,13 @@
 #include <string>
 #include <stdio.h>
 #include <SFML/Graphics.hpp>
-#include "CharMoveTemp.h"
 #include "Object.h"
+#include "Animator.h"
 using std::string;
 
 class Character : public Object {
     public:
-        Character(sf::RenderWindow* window, string path, double sX, double sY, double width, double height);
+        Character(sf::RenderWindow* window, string path, double sX, double sY, double width, double height, string datapath);
         ~Character();
 
         void SetPosition(double x, double y);
@@ -19,15 +19,11 @@ class Character : public Object {
         double GetY();
 
         void Draw();
-        void Calculate();
-        void SetMovementClass(CharMoveTemp* temp);
+        void Calculate(double delta);
 
     private:
-        CharMoveTemp* movement = NULL;
+        Animator* anima = NULL;
         sf::RenderWindow* w = NULL;
-        sf::Texture* texture = NULL;
-        sf::Sprite* sprite = NULL;
-        double oW = 0, oH = 0; //Texture'un yüklendiği haldeki büyüklüğü
         double iWidth = 0, iHeight = 0; //Sprite'ın olmasını istediğimiz büyüklüğü
         double iX = 0, iY = 0; //Sprite'ın olmasını istediğimiz konumu
 };

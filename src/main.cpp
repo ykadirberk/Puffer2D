@@ -8,7 +8,6 @@
 #include "Text.h"
 #include "Character.h"
 #include "AnimationData.h"
-#include "PlayerMovement.h"
 #include "PlainField.h"
 #include "TextFactory.h"
 //#include <windows.h>
@@ -48,9 +47,7 @@ int main() {
 
 	//Ekrana çizilmesi istenen karakter tanımlaması
 	//!Şu an işlevsiz
-	Character* cha = new Character(window, "INGAME/PLAYER/character-tiles.png", 600, 100, 180, 160);
-	PlayerMovement* mov = new PlayerMovement(cha->GetSprite());
-	cha->SetMovementClass(mov);
+	Character* cha = new Character(window, "INGAME/PLAYER/character-tiles.png", 600, 100, 90, 80, "INGAME/PLAYER/player.data");
 
 	//?GAME LOOP
 	while(window->isOpen()) {
@@ -67,12 +64,12 @@ int main() {
 		//but->Move(100*deltaTime, 100*deltaTime);
 		//? CALCULATIONS
 		but->Calculations(deltaTime);
-		cha->Calculate();
+		cha->Calculate(deltaTime);
 		writeatext->Calc(deltaTime);
 
 		window->clear(); //görüntüyü temizler (yoksa önceki frame'den görüntü kalır)
 		//? GAME DRAWINGS
-
+		cha->Draw();
 		
 		//? GUI DRAWINGS
 		factory->DrawTexts(deltaTime);

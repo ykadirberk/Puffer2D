@@ -3,11 +3,11 @@
 class Object
 {
     public:
-        virtual void calculate() 
+        virtual void Calculate(double delta) 
         {
             printf("Object is not defined.");
         }
-        virtual void draw()
+        virtual void Draw()
         {
             printf("Draw is not defined.");
         }        

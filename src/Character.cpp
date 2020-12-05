@@ -1,27 +1,16 @@
 #include "Character.h"
 
 
-Character::Character(sf::RenderWindow* window, string path, double sX, double sY, double width, double height) {
-    texture = new sf::Texture();
-    sprite = new sf::Sprite();
-    if (!texture->loadFromFile(path)) { //! Texture dosyadan yüklenir. Bu kod daha sonra değiştirilecek.
-    	printf("[LOG] Couldn't load Character texture. \n"); //texture yüklenemezse hata mesajı
-	} else {
-		printf("[LOG] Character texture loaded. \n"); //texture yüklendi mesajı
-	}
+Character::Character(sf::RenderWindow* window, string path, double sX, double sY, double width, double height, string datapath) {
+    anima = new Animator(path,datapath);
     w = window;
-    
-    oW = texture->getSize().x;
-    oH = texture->getSize().y;
     
     iWidth = width;
     iHeight = height;
     iX = sX;
     iY = sY;
-    
-    sprite->setTexture(*texture);
-    sprite->setScale(iWidth/oW, iHeight/oH);
-    sprite->setPosition(sX, sY);
+    anima->GetSprite()->setScale(iWidth/anima->GetScaleRule().x, iHeight/anima->GetScaleRule().y);
+    anima->GetSprite()->setPosition(sX, sY);
 }
 
 Character::~Character() {
@@ -29,19 +18,19 @@ Character::~Character() {
 }
 
 void Character::SetPosition(double x, double y) {
-    sprite->setPosition(x, y);
+    anima->GetSprite()->setPosition(x, y);
     iX = x;
     iY = y;
 }
 
 void Character::Move(double x, double y){
-    sprite->move(x, y);
+    anima->GetSprite()->move(x, y);
     iX += x;
     iY += y;
 }
 
 sf::Sprite* Character::GetSprite() {
-    return sprite;
+    return anima->GetSprite();
 }
 
 double Character::GetX(){
@@ -54,12 +43,26 @@ double Character::GetY(){
 
 
 void Character::Draw(){
-    w->draw(*sprite);
+    w->draw(*anima->GetSprite());
 }
 
-void Character::Calculate() {
-    movement->calculate();
-}
-void Character::SetMovementClass(CharMoveTemp* temp) {
-    movement = temp;
+void Character::Calculate(double delta) {
+    if( sf::Keyboard::isKeyPressed( sf::Keyboard::Up) || sf::Keyboard::isKeyPressed( sf::Keyboard::W) ) {
+        anima->CalculateSprite("[UP]",delta);
+        anima->GetSprite()->move(0.f,-0.2f);
+
+    } else if( sf::Keyboard::isKeyPressed( sf::Keyboard::Down) || sf::Keyboard::isKeyPressed( sf::Keyboard::S) ) {
+        anima->CalculateSprite("[DOWN]",delta);
+        anima->GetSprite()->move(0.f,0.2f);
+    }
+    else if( sf::Keyboard::isKeyPressed( sf::Keyboard::Right) || sf::Keyboard::isKeyPressed( sf::Keyboard::D) ) {
+        anima->CalculateSprite("[RIGHT]",delta);
+        anima->GetSprite()->move(0.2f,0.f);
+    }
+    else if( sf::Keyboard::isKeyPressed( sf::Keyboard::Left) || sf::Keyboard::isKeyPressed( sf::Keyboard::A) ) {
+        anima->CalculateSprite("[LEFT]",delta);
+        anima->GetSprite()->move(-0.2f,0.f);
+    } else {
+        anima->CalculateSprite("[IDLE]",delta);
+    }
 }
