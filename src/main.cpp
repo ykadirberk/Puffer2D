@@ -11,7 +11,7 @@
 #include "PlayerMovement.h"
 #include "PlainField.h"
 #include "TextFactory.h"
-#include <windows.h>
+//#include <windows.h>
 using namespace std;
 
 
@@ -66,7 +66,7 @@ int main() {
 		
 		//but->Move(100*deltaTime, 100*deltaTime);
 		//? CALCULATIONS
-		but->Calculations();
+		but->Calculations(deltaTime);
 		cha->Calculate();
 		writeatext->Calc(deltaTime);
 
@@ -79,7 +79,7 @@ int main() {
 		writeatext->Draw(); //yazılması istenen görüntüyü yazdıran fonksiyon
 		but->Draw();
 		window->display(); //pencereyi çizer
-		Sleep(1000/60);
+		//Sleep(1000/60);
 	}
 	return 0;
 }

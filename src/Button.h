@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <SFML/Graphics.hpp>
 #include "AnimationData.h"
+#include "Animator.h"
 using std::string;
 
 class Button {
@@ -16,12 +17,11 @@ class Button {
         double GetX();
         double GetY();
 
-        void Calculations();
+        void Calculations(double delta);
         void Draw();
     private:
-        AnimationData* adata = NULL;
+        Animator* animator = NULL;
         sf::RenderWindow* w = NULL;
-        sf::Texture* texture = NULL;
         sf::Sprite* sprite = NULL;
         double oW = 0, oH = 0; //Texture'un yüklendiği haldeki büyüklüğü
         double iWidth = 0, iHeight = 0; //Sprite'ın olmasını istediğimiz büyüklüğü

@@ -2,30 +2,17 @@
 
 Button::Button(sf::RenderWindow* window,string path ,double sX, double sY, double width, double height, string datapath) {
     w = window;
-    texture = new sf::Texture();
-    adata = new AnimationData(datapath);
-    if (!texture->loadFromFile(path)) { //! Texture dosyadan yüklenir. Bu kod daha sonra değiştirilecek.
-    	printf("[LOG] Couldn't load button texture. \n"); //texture yüklenemezse hata mesajı
-	} else {
-		printf("[LOG] Button texture loaded. \n"); //texture yüklendi mesajı
-	}
-
-    //Yüklenen Texture'un gerçek büyüklükleri kaydediliyor.
-    oW = adata->GetScaleRule().x;
-    oH = adata->GetScaleRule().y;
-    
     //Ekrana çizilmesi istenen büyüklükler kaydediliyor.
     iWidth = width;
     iHeight = height;
-
     //Ekrana çizilmesi istenen konum kaydediliyor.
     iX = sX;
     iY = sY;
 
-    sprite = new sf::Sprite(*texture, sf::IntRect(0,0,oW,oH));
+    animator = new Animator(path, datapath);
     //Sprite elle girilen büyüklük desteklemediği için scale cinsine çevirerek istenen boyuta getiriliyor.
-    sprite->setScale(iWidth/oW, iHeight/oH);
-    sprite->setPosition(sX, sY);
+    animator->GetSprite()->setScale(iWidth/animator->GetScaleRule().x, iHeight/animator->GetScaleRule().y);
+    animator->GetSprite()->setPosition(sX, sY);
 }
 
 Button::~Button() {
@@ -33,13 +20,13 @@ Button::~Button() {
 }
 
 void Button::SetPosition(double x, double y) {
-    sprite->setPosition(x, y);
+    animator->GetSprite()->setPosition(x, y);
     iX = x;
     iY = y;
 }
 
 void Button::Move(double x, double y){
-    sprite->move(x, y);
+    animator->GetSprite()->move(x, y);
     iX += x;
     iY += y;
 }
@@ -52,34 +39,37 @@ double Button::GetY(){
     return iY;
 }
 
-void Button::Calculations() {
+void Button::Calculations(double delta) {
     mX = sf::Mouse::getPosition(*w).x;
     mY = sf::Mouse::getPosition(*w).y;
 
     if (mX >= iX 
         && mX <= iX + iWidth 
         && mY >= iY
-        && mY <= iY + iHeight) {
-            //Mouse butonun üstüne
-            sprite->setTextureRect(sf::IntRect(0, 22, 48, 22));
-            if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-                //sprite->setTexture(*texture2);
-                sprite->setTextureRect(sf::IntRect(0, 44, 48, 22));
-                mousePressed = true;
-            } else {
-                if (mousePressed) {
-                    //execution
-                    printf("[LOG] Button function executed.\n");
-                    mousePressed = false;
-                }
-            }
+        && mY <= iY + iHeight
+        && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        //Mouse Butona tıkladı
+        animator->CalculateSprite("[PRESSED]",delta);
+        mousePressed = true;
+    } else if (mX >= iX 
+        && mX <= iX + iWidth 
+        && mY >= iY
+        && mY <= iY + iHeight){
+        //Mouse Butonun üstünde
+        animator->CalculateSprite("[HOVER]", delta);
+        if (mousePressed) {
+            //execution
+            printf("[LOG] Button function executed.\n");
+            mousePressed = false;
+        }
     } else {
+        //Mouse Butonun üstünde değil ve tıklanmıyor.
         mousePressed = false;
-        sprite->setTextureRect(sf::IntRect(0, 0, 48, 22));
+        animator->CalculateSprite("[REGULAR]", delta);
     }
 }
 
 
 void Button::Draw(){
-    w->draw(*sprite);
+    w->draw(*animator->GetSprite());
 }
