@@ -10,7 +10,6 @@
 #include "AnimationData.h"
 #include "PlainField.h"
 #include "TextFactory.h"
-//#include <windows.h>
 using namespace std;
 
 
@@ -19,6 +18,7 @@ int main() {
 	cout << "[LOG] Engine starting" << endl;
 	//pencereyi ekrana verir, özelliklerini tanımlar
 	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Hello, world!");
+	window->setFramerateLimit(144);
 
 	sf::Clock clock; //zaman kavramını tanımlar
 	double deltaTime = 0; //Zamandaki değişimi tanımladım
@@ -76,7 +76,6 @@ int main() {
 		writeatext->Draw(); //yazılması istenen görüntüyü yazdıran fonksiyon
 		but->Draw();
 		window->display(); //pencereyi çizer
-		//Sleep(1000/60);
 	}
 	return 0;
 }

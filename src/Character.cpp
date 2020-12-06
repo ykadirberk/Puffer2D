@@ -5,6 +5,8 @@ Character::Character(sf::RenderWindow* window, string path, double sX, double sY
     anima = new Animator(path,datapath);
     w = window;
     
+    speed = 200.0f;
+
     iWidth = width;
     iHeight = height;
     iX = sX;
@@ -49,19 +51,19 @@ void Character::Draw(){
 void Character::Calculate(double delta) {
     if( sf::Keyboard::isKeyPressed( sf::Keyboard::Up) || sf::Keyboard::isKeyPressed( sf::Keyboard::W) ) {
         anima->CalculateSprite("[UP]",delta);
-        anima->GetSprite()->move(0.f,-0.2f);
+        anima->GetSprite()->move(0.f,(-1)*speed*delta);
 
     } else if( sf::Keyboard::isKeyPressed( sf::Keyboard::Down) || sf::Keyboard::isKeyPressed( sf::Keyboard::S) ) {
         anima->CalculateSprite("[DOWN]",delta);
-        anima->GetSprite()->move(0.f,0.2f);
+        anima->GetSprite()->move(0.f,speed*delta);
     }
     else if( sf::Keyboard::isKeyPressed( sf::Keyboard::Right) || sf::Keyboard::isKeyPressed( sf::Keyboard::D) ) {
         anima->CalculateSprite("[RIGHT]",delta);
-        anima->GetSprite()->move(0.2f,0.f);
+        anima->GetSprite()->move(speed*delta,0.f);
     }
     else if( sf::Keyboard::isKeyPressed( sf::Keyboard::Left) || sf::Keyboard::isKeyPressed( sf::Keyboard::A) ) {
         anima->CalculateSprite("[LEFT]",delta);
-        anima->GetSprite()->move(-0.2f,0.f);
+        anima->GetSprite()->move((-1)*speed*delta,0.f);
     } else {
         anima->CalculateSprite("[IDLE]",delta);
     }

@@ -22,6 +22,7 @@ class Character : public Object {
         void Calculate(double delta);
 
     private:
+        float speed = 0.0f;
         Animator* anima = NULL;
         sf::RenderWindow* w = NULL;
         double iWidth = 0, iHeight = 0; //Sprite'ın olmasını istediğimiz büyüklüğü
