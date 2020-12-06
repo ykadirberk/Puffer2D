@@ -6,10 +6,10 @@ Text::Text(sf::RenderWindow* window, sf::Font* font,string text, int size, sf::C
     txt = new sf::Text();
     w = window;
     txt->setFont(*font);
-    //txt->setString(text);
     txt->setCharacterSize(size);
     txt->setFillColor(color);
     txt->setStyle(sf::Text::Regular);
+    
 }
 
 Text::~Text() {

@@ -17,7 +17,7 @@ using namespace std;
 int main() {
 	cout << "[LOG] Engine starting" << endl;
 	//pencereyi ekrana verir, özelliklerini tanımlar
-	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1280, 720), "Hello, world!");
+	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1280, 720), "SFML ENGINE");
 	window->setFramerateLimit(144);
 
 	sf::Clock clock; //zaman kavramını tanımlar
@@ -29,6 +29,7 @@ int main() {
 	} else {
 		printf("[LOG] Font (kongtext) loaded. \n"); //font yüklendi mesajı
 	}
+	font.setSmooth(false);
 	//Ekrana yazılması istenen bir yazının tanımlanması
 	Text* writeatext = new Text(window, &font, "Bu bir oyundur.", 18, sf::Color::Yellow);
 	writeatext->SetPosition(0,0);
@@ -57,10 +58,18 @@ int main() {
 		//input denetleyicisi
 		sf::Event event;
 		while(window->pollEvent(event)) {
+			
 			if(event.type == sf::Event::Closed)
 				window->close();
+			
+			if ( event.type == sf::Event::KeyPressed ) {
+                switch ( event.key.code ) {
+                case sf::Keyboard::Space:
+                    font.setSmooth( !font.isSmooth() );
+                    break;
+				}
+            }
 		}
-		
 		//but->Move(100*deltaTime, 100*deltaTime);
 		//? CALCULATIONS
 		but->Calculations(deltaTime);
