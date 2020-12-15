@@ -25,7 +25,7 @@ class Text {
         sf::Font* dafont = NULL;
         string stringofthis;
         double timer = 0;
-        double animation_const = 0.01;
+        double animation_const = 0.025;
         int counter = 0;
         bool visibility = true;
         bool d_draw = false;
