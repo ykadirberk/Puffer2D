@@ -1,7 +1,7 @@
 #include "PlainField.h"
 
-PlainField::PlainField(sf::RenderWindow* window) {
-    w = window;
+PlainField::PlainField(sf::RenderTexture* rtext) {
+    r = rtext;
 }
 PlainField::~PlainField() {
 

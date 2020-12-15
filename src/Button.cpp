@@ -1,16 +1,16 @@
 #include "Button.h"
 
-Button::Button(sf::RenderWindow* window,string path ,double sX, double sY, double width, double height, string datapath) {
-    w = window;
-    //Ekrana çizilmesi istenen büyüklükler kaydediliyor.
+Button::Button(sf::RenderTexture* rtext,string path ,double sX, double sY, double width, double height, string datapath) {
+    w = rtext;
+    //Size values are stored. 
     iWidth = width;
     iHeight = height;
-    //Ekrana çizilmesi istenen konum kaydediliyor.
+    //Position on screen is stored.
     iX = sX;
     iY = sY;
 
     animator = new Animator(path, datapath);
-    //Sprite elle girilen büyüklük desteklemediği için scale cinsine çevirerek istenen boyuta getiriliyor.
+    //sf::Sprite uses Scale as a size paramater. This statement manipulates it to act like size.
     animator->GetSprite()->setScale(iWidth/animator->GetScaleRule().x, iHeight/animator->GetScaleRule().y);
     animator->GetSprite()->setPosition(sX, sY);
 }
@@ -39,23 +39,23 @@ double Button::GetY(){
     return iY;
 }
 
-void Button::Calculations(double delta) {
-    mX = sf::Mouse::getPosition(*w).x;
-    mY = sf::Mouse::getPosition(*w).y;
+void Button::Calculations(double delta, sf::RenderWindow* wind) {
+    mX = sf::Mouse::getPosition(*wind).x;
+    mY = sf::Mouse::getPosition(*wind).y;
 
     if (mX >= iX 
         && mX <= iX + iWidth 
         && mY >= iY
         && mY <= iY + iHeight
         && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-        //Mouse Butona tıkladı
+        //Mouse pressed the button
         animator->CalculateSprite("[PRESSED]",delta);
         mousePressed = true;
     } else if (mX >= iX 
         && mX <= iX + iWidth 
         && mY >= iY
         && mY <= iY + iHeight){
-        //Mouse Butonun üstünde
+        //Mouse is hovering the button
         animator->CalculateSprite("[HOVER]", delta);
         if (mousePressed) {
             //execution
@@ -63,7 +63,7 @@ void Button::Calculations(double delta) {
             mousePressed = false;
         }
     } else {
-        //Mouse Butonun üstünde değil ve tıklanmıyor.
+        //Mouse is not hovering the button nor pressing.
         mousePressed = false;
         animator->CalculateSprite("[REGULAR]", delta);
     }

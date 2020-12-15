@@ -7,6 +7,8 @@
 #include <sstream>
 using namespace std;
 
+//Aim of this class is to classify the data to be used later.
+
 namespace animator {
     struct pair {
         double x;

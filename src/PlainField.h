@@ -7,7 +7,7 @@ using namespace std;
 
 class PlainField {
     public:
-        PlainField(sf::RenderWindow* window);
+        PlainField(sf::RenderTexture* rtext);
         ~PlainField();
 
         void SetPosition(double x, double y);
@@ -19,6 +19,6 @@ class PlainField {
         void Draw();
 
     private:
-        sf::RenderWindow* w = NULL;
+        sf::RenderTexture* r = NULL;
         double dx = 0, dy = 0, dwidth = 0, dheight = 0;
 };

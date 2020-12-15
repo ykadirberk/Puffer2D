@@ -8,7 +8,7 @@ using std::string;
 
 class Character : public Object {
     public:
-        Character(sf::RenderWindow* window, string path, double sX, double sY, double width, double height, string datapath);
+        Character(sf::RenderTexture* rtext, string path, double sX, double sY, double width, double height, string datapath);
         ~Character();
 
         void SetPosition(double x, double y);
@@ -24,7 +24,6 @@ class Character : public Object {
     private:
         float speed = 0.0f;
         Animator* anima = NULL;
-        sf::RenderWindow* w = NULL;
+        sf::RenderTexture* r = NULL;
         double iWidth = 0, iHeight = 0; //Sprite'ın olmasını istediğimiz büyüklüğü
-        double iX = 0, iY = 0; //Sprite'ın olmasını istediğimiz konumu
 };

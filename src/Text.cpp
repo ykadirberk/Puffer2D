@@ -1,10 +1,10 @@
 #include "Text.h"
 
-Text::Text(sf::RenderWindow* window, sf::Font* font,string text, int size, sf::Color color) {
+Text::Text(sf::RenderTexture* rtext, sf::Font* font,string text, int size, sf::Color color) {
     stringofthis = text;
     dafont = font;
     txt = new sf::Text();
-    w = window;
+    r = rtext;
     txt->setFont(*font);
     txt->setCharacterSize(size);
     txt->setFillColor(color);
@@ -53,7 +53,7 @@ bool Text::Draw() {
         if (!d_draw) {
             txt->setString(stringofthis.substr(0,counter+1));
         }
-        w->draw(*txt);
+        r->draw(*txt);
     } 
     return d_draw;
 }

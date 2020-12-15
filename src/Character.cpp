@@ -1,17 +1,19 @@
 #include "Character.h"
 
 
-Character::Character(sf::RenderWindow* window, string path, double sX, double sY, double width, double height, string datapath) {
+Character::Character(sf::RenderTexture* rtext, string path, double sX, double sY, double width, double height, string datapath) {
     anima = new Animator(path,datapath);
-    w = window;
+    r = rtext;
     
+    //Movespeed.
     speed = 200.0f;
 
+    //Storing sizes of character.
     iWidth = width;
     iHeight = height;
-    iX = sX;
-    iY = sY;
+    //sf::Sprite uses Scale as a size paramater. This statement manipulates it to act like size.
     anima->GetSprite()->setScale(iWidth/anima->GetScaleRule().x, iHeight/anima->GetScaleRule().y);
+    //Provided position implemented to sprite object.
     anima->GetSprite()->setPosition(sX, sY);
 }
 
@@ -21,14 +23,10 @@ Character::~Character() {
 
 void Character::SetPosition(double x, double y) {
     anima->GetSprite()->setPosition(x, y);
-    iX = x;
-    iY = y;
 }
 
 void Character::Move(double x, double y){
     anima->GetSprite()->move(x, y);
-    iX += x;
-    iY += y;
 }
 
 sf::Sprite* Character::GetSprite() {
@@ -36,19 +34,20 @@ sf::Sprite* Character::GetSprite() {
 }
 
 double Character::GetX(){
-    return iX;
+    return anima->GetSprite()->getPosition().x;
 }
 
 double Character::GetY(){
-    return iY;
+    return anima->GetSprite()->getPosition().y;
 }
 
 
 void Character::Draw(){
-    w->draw(*anima->GetSprite());
+    r->draw(*anima->GetSprite());
 }
 
 void Character::Calculate(double delta) {
+    //Defining move of character
     if( sf::Keyboard::isKeyPressed( sf::Keyboard::Up) || sf::Keyboard::isKeyPressed( sf::Keyboard::W) ) {
         anima->CalculateSprite("[UP]",delta);
         anima->GetSprite()->move(0.f,(-1)*speed*delta);

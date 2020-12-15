@@ -3,88 +3,76 @@
 #include <iostream>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
-#include "wVector2D.h"
-#include "Button.h"
-#include "Text.h"
-#include "Character.h"
-#include "AnimationData.h"
-#include "PlainField.h"
-#include "TextFactory.h"
+#include "Level0.h"
 using namespace std;
 
 
 
 int main() {
 	cout << "[LOG] Engine starting" << endl;
-	//pencereyi ekrana verir, özelliklerini tanımlar
-	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1280, 720), "SFML ENGINE");
-	window->setFramerateLimit(144);
+	//?Creation of window
+	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1280, 720), "SFML ENGINE"); //Window's size is 1280x720
+	window->setFramerateLimit(144);	//Setting framerate limit to 144
 
-	sf::Clock clock; //zaman kavramını tanımlar
-	double deltaTime = 0; //Zamandaki değişimi tanımladım
+	sf::Clock clock; //Defining time
+	double deltaTime = 0; //Defining change in time
 
-	sf::Font font; //font tanımlanır
-	if (!font.loadFromFile("kongtext.ttf")) { //! Font dosyadan yüklenir. Bu kod daha sonra değiştirilecek.
-    	printf("[LOG] Couldn't load font. \n"); //font yüklenemezse hata mesajı
+	//Defining gui camera component
+	sf::View* gui_cam = new sf::View(sf::FloatRect(0.f,0.f,1280.f,720.f)); //The part that will be showed on screen
+	sf::RenderTexture* gui_handler = new sf::RenderTexture(); //Render object
+	gui_handler->create(1280,720);
+	gui_handler->setView(*gui_cam);
+	const sf::Texture& gui_texture = gui_handler->getTexture(); //Created a reference to renderer's texture
+	sf::Sprite gui_comps(gui_texture); //Preparing reference texture to get rendered.
+	
+	//Defining in-game camera component
+	sf::View* ingame_cam = new sf::View(sf::FloatRect(0.f,0.f,1280.f,720.f)); //The part that will be showed on screen
+	sf::RenderTexture* ingame_handler = new sf::RenderTexture(); //Render object
+	ingame_handler->create(1280,720);
+	ingame_handler->setView(*ingame_cam);
+	const sf::Texture& ingame_texture = ingame_handler->getTexture(); //Created a reference to renderer's texture
+	sf::Sprite ingame_comps(ingame_texture); //Preparing reference texture to get rendered.
+
+	//Defining font
+	sf::Font font;
+	if (!font.loadFromFile("kongtext.ttf")) { //! Font being read from file. Will be replaced later.
+    	printf("[LOG] Couldn't load font. \n"); //Message for load error
 	} else {
-		printf("[LOG] Font (kongtext) loaded. \n"); //font yüklendi mesajı
+		printf("[LOG] Font (kongtext) loaded. \n"); //Message if font loaded.
 	}
-	font.setSmooth(false);
-	//Ekrana yazılması istenen bir yazının tanımlanması
-	Text* writeatext = new Text(window, &font, "Bu bir oyundur.", 18, sf::Color::Yellow);
-	writeatext->SetPosition(0,0);
 
-	//PlainField Denemesi
-	PlainField* field = new PlainField(window);
-	field->SetPosition(200,400);
-	field->SetFieldLength(500,500);
-	TextFactory* factory = new TextFactory(window, field, "Merhaba arkadaslar &7bugunku &evideomuzda &1&fben &4arda&eyla birlikte &0bu mal &fprogrami calistirmaya &ecalisiyorum.", &font);
-	factory->PrepareTexts();
-
-
-	//Ekrana çizilmesi istenen buton tanımlaması
-	//!Şu an işlevsiz
-	Button* but = new Button(window, "GUI/BUTTON/button.png",50, 50, 196, 88, "GUI/BUTTON/button.data");
-
-	//Ekrana çizilmesi istenen karakter tanımlaması
-	//!Şu an işlevsiz
-	Character* cha = new Character(window, "INGAME/PLAYER/character-tiles.png", 600, 100, 90, 80, "INGAME/PLAYER/player.data");
+	//Defining levels
+	Level0 level0(gui_handler,ingame_handler,&font);
 
 	//?GAME LOOP
 	while(window->isOpen()) {
-		deltaTime = clock.getElapsedTime().asSeconds(); //zamandaki değişimi buldum
-		clock.restart();  //zamandaki değişimi bulabilmek için renderdan önce ve son kayıttan sonra zaman değişkenini sıfırladım
+		deltaTime = clock.getElapsedTime().asSeconds(); //Finding the change in time
+		clock.restart();  //To calculate the change in time, clock variable will be resetted sa that it can start from zero.
 
-		//input denetleyicisi
+		//Event handler
 		sf::Event event;
 		while(window->pollEvent(event)) {
-			
 			if(event.type == sf::Event::Closed)
 				window->close();
-			
-			if ( event.type == sf::Event::KeyPressed ) {
-                switch ( event.key.code ) {
-                case sf::Keyboard::Space:
-                    font.setSmooth( !font.isSmooth() );
-                    break;
-				}
-            }
 		}
-		//but->Move(100*deltaTime, 100*deltaTime);
-		//? CALCULATIONS
-		but->Calculations(deltaTime);
-		cha->Calculate(deltaTime);
-		writeatext->Calc(deltaTime);
 
-		window->clear(); //görüntüyü temizler (yoksa önceki frame'den görüntü kalır)
-		//? GAME DRAWINGS
-		cha->Draw();
+		//?Clearing renderers
+		ingame_handler->clear(sf::Color::Transparent);
+		gui_handler->clear(sf::Color::Transparent);
+		window->clear(sf::Color::Transparent); 
 		
-		//? GUI DRAWINGS
-		factory->DrawTexts(deltaTime);
-		writeatext->Draw(); //yazılması istenen görüntüyü yazdıran fonksiyon
-		but->Draw();
-		window->display(); //pencereyi çizer
+		//?Drawing Levels
+		level0.draw(deltaTime,window,ingame_cam);
+		
+		//? Displaying layers
+		ingame_handler->display();
+		gui_handler->display();
+
+		window->draw(ingame_comps);
+		window->draw(gui_comps);
+
+		window->display(); //Draws final image
 	}
+
 	return 0;
 }

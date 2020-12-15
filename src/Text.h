@@ -7,7 +7,7 @@ using namespace std;
 
 class Text {
     public:
-        Text(sf::RenderWindow* window, sf::Font* font, string text, int size, sf::Color color);
+        Text(sf::RenderTexture* rtext, sf::Font* font, string text, int size, sf::Color color);
         ~Text();
 
         void SetPosition(double x, double y);
@@ -25,10 +25,10 @@ class Text {
         sf::Font* dafont = NULL;
         string stringofthis;
         double timer = 0;
-        double animation_const = 0.05;
+        double animation_const = 0.01;
         int counter = 0;
         bool visibility = true;
         bool d_draw = false;
         sf::Text* txt = NULL;
-        sf::RenderWindow* w = NULL;
+        sf::RenderTexture* r = NULL;
 };

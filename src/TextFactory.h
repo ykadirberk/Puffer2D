@@ -42,7 +42,7 @@ using namespace std;
 
 class TextFactory {
     public:
-        TextFactory(sf::RenderWindow* window, PlainField* field, string input, sf::Font* fnt);
+        TextFactory(sf::RenderTexture* rtext, PlainField* field, string input, sf::Font* fnt);
         ~TextFactory();
 
         void PrepareTexts();
@@ -59,7 +59,7 @@ class TextFactory {
         
         sf::Font* p_font;
         sf::Color colortype;
-        sf::RenderWindow* w = NULL;
+        sf::RenderTexture* r = NULL;
         
         string total_string;
         string total_string_backup;
