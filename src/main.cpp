@@ -6,29 +6,30 @@
 #include "Level0.h"
 using namespace std;
 
-
+int ref_width = 1600;
+int ref_height = 900;
 
 int main() {
 	cout << "[LOG] Engine starting" << endl;
 	//?Creation of window
-	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(1280, 720), "SFML ENGINE"); //Window's size is 1280x720
+	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(ref_width, ref_height), "SFML ENGINE", sf::Style::None);
 	window->setFramerateLimit(144);	//Setting framerate limit to 144
 
 	sf::Clock clock; //Defining time
 	double deltaTime = 0; //Defining change in time
 
 	//Defining gui camera component
-	sf::View* gui_cam = new sf::View(sf::FloatRect(0.f,0.f,1280.f,720.f)); //The part that will be showed on screen
+	sf::View* gui_cam = new sf::View(sf::FloatRect(0.f,0.f,ref_width,ref_height)); //The part that will be showed on screen
 	sf::RenderTexture* gui_handler = new sf::RenderTexture(); //Render object
-	gui_handler->create(1280,720);
+	gui_handler->create(ref_width,ref_height);
 	gui_handler->setView(*gui_cam);
 	const sf::Texture& gui_texture = gui_handler->getTexture(); //Created a reference to renderer's texture
 	sf::Sprite gui_comps(gui_texture); //Preparing reference texture to get rendered.
 	
 	//Defining in-game camera component
-	sf::View* ingame_cam = new sf::View(sf::FloatRect(0.f,0.f,1280.f,720.f)); //The part that will be showed on screen
+	sf::View* ingame_cam = new sf::View(sf::FloatRect(0.f,0.f,ref_width, ref_height)); //The part that will be showed on screen
 	sf::RenderTexture* ingame_handler = new sf::RenderTexture(); //Render object
-	ingame_handler->create(1280,720);
+	ingame_handler->create(ref_width,ref_height);
 	ingame_handler->setView(*ingame_cam);
 	const sf::Texture& ingame_texture = ingame_handler->getTexture(); //Created a reference to renderer's texture
 	sf::Sprite ingame_comps(ingame_texture); //Preparing reference texture to get rendered.
@@ -54,6 +55,11 @@ int main() {
 		while(window->pollEvent(event)) {
 			if(event.type == sf::Event::Closed)
 				window->close();
+			if(event.type == sf::Event::KeyPressed) {
+				if (event.key.code == sf::Keyboard::Escape) {
+					window->close();
+				}
+			}
 		}
 
 		//?Clearing renderers

@@ -5,7 +5,7 @@ Level0::Level0(sf::RenderTexture* guih, sf::RenderTexture* ingameh, sf::Font* fn
     gui_handler = guih;
     font = fnt;
     //Defining a text
-	writeatext = new Text(gui_handler, font, "Bu bir oyundur.", 18, sf::Color::Yellow);
+	writeatext = new Text(gui_handler, font, "Press ESC to exit.", 18, sf::Color::Yellow);
 	writeatext->SetPosition(0,0);
 
 	//Trying PlainField

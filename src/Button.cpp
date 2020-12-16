@@ -40,8 +40,12 @@ double Button::GetY(){
 }
 
 void Button::Calculations(double delta, sf::RenderWindow* wind) {
-    mX = sf::Mouse::getPosition(*wind).x;
-    mY = sf::Mouse::getPosition(*wind).y;
+    // get the current mouse position in the window
+    sf::Vector2i pixelPos = sf::Mouse::getPosition(*wind);
+    // convert it to world coordinates
+    sf::Vector2f worldPos = wind->mapPixelToCoords(pixelPos);
+    mX = worldPos.x;
+    mY = worldPos.y;
 
     if (mX >= iX 
         && mX <= iX + iWidth 
