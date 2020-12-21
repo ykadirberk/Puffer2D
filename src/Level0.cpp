@@ -31,8 +31,8 @@ Level0::~Level0() {
 void Level0::draw(double deltaTime, sf::RenderWindow* wind, sf::View* ingame) {
     //? CALCULATIONS
 	but->Calculations(deltaTime, wind);
-	cha->Calculate(deltaTime);
-    ingame->setCenter(cha->GetX(), cha->GetY()); //Centers to the character.
+	cha->Calculate(deltaTime); 
+    //ingame->setCenter(cha->GetPosition().x, cha->GetPosition().y); //! NOT WORKING FOR NOW //Centers to the character. 
 	writeatext->Calc(deltaTime);
 	//? GAME DRAWINGS
 	cha->Draw();
@@ -41,5 +41,5 @@ void Level0::draw(double deltaTime, sf::RenderWindow* wind, sf::View* ingame) {
 	factory->DrawTexts(deltaTime);
 	writeatext->Draw();
 	but->Draw();
-	ingame_handler->setView(*ingame); //To center to the character
+	ingame_handler->setView(*ingame);//To center to the character
 }

@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Object.h"
 #include "Animator.h"
+#include "wVector2D.h"
 using std::string;
 
 class Character : public Object {
@@ -15,14 +16,14 @@ class Character : public Object {
         void SetSize(double w, double h);
         void Move(double x, double y);
         sf::Sprite* GetSprite();
-        double GetX();
-        double GetY();
+        wVector2D GetPosition();
 
         void Draw();
         void Calculate(double delta);
 
     private:
-        float speed = 0.0f;
+        wVector2D* position = NULL;
+        wVector2D* speed = NULL;
         Animator* anima = NULL;
         sf::RenderTexture* r = NULL;
         double iWidth = 0, iHeight = 0; //Sprite'ın olmasını istediğimiz büyüklüğü
