@@ -1,6 +1,6 @@
 #include "TextFactory.h"
 
-TextFactory::TextFactory(sf::RenderTexture* rtext, PlainField* field, string input, sf::Font* fnt) {
+Puffer::TextFactory::TextFactory(sf::RenderTexture* rtext, PlainField* field, string input, sf::Font* fnt) {
     total_string = input;
     total_string_backup = input;
     p_font = fnt;
@@ -25,11 +25,12 @@ TextFactory::TextFactory(sf::RenderTexture* rtext, PlainField* field, string inp
     colormap.insert(pair<char ,sf::Color>(WHITE,COLOR_WHITE));
 }
 
-TextFactory::~TextFactory() {
-
+Puffer::TextFactory::~TextFactory() {
+    texts.clear();
+    printf("[DECONSTRUCT-LOG] TextFactory class released.\n");
 }
 
-void TextFactory::PrepareTexts() {
+void Puffer::TextFactory::PrepareTexts() {
     colortype = COLOR_WHITE;
     int linecounter = 0; //Storing how many lines are there.
     size_t tend = 0; //Storing format changer character
@@ -134,13 +135,13 @@ void TextFactory::PrepareTexts() {
     }
 }
 
-void TextFactory::DrawTexts(double deltas) {
+void Puffer::TextFactory::DrawTexts(double deltas) {
     for (int i = 0; i < texts.size(); i++) {
         texts[i]->Calc(deltas);
         if(!texts[i]->Draw()) break;
     }
 }
 
-inline int TextFactory::GetCharLength(char &letter, sf::Font &font, int font_size, bool boldnesss) {
+inline int Puffer::TextFactory::GetCharLength(char &letter, sf::Font &font, int font_size, bool boldnesss) {
     return font.getGlyph(int(letter), font_size, boldness).advance;
 }

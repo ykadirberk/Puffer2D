@@ -8,25 +8,26 @@
 using namespace std;
 
 //Aim of this class is to classify the data to be used later.
+namespace Puffer {
+    namespace animator {
+        struct pair {
+            double x;
+            double y;
+        };
+    }
 
-namespace animator {
-    struct pair {
-        double x;
-        double y;
+    class AnimationData {
+        public:
+            AnimationData(string path);
+            ~AnimationData();
+
+            vector<animator::pair> at(string key);
+            animator::pair GetScaleRule();
+        private:
+            animator::pair scale_rule;
+            ifstream datafile;
+            vector<vector<animator::pair>> values;
+            vector<string> keys;
+
     };
 }
-
-class AnimationData {
-    public:
-        AnimationData(string path);
-        ~AnimationData();
-
-        vector<animator::pair> at(string key);
-        animator::pair GetScaleRule();
-    private:
-        animator::pair scale_rule;
-        ifstream datafile;
-        vector<vector<animator::pair>> values;
-        vector<string> keys;
-
-};

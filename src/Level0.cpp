@@ -5,27 +5,34 @@ Level0::Level0(sf::RenderTexture* guih, sf::RenderTexture* ingameh, sf::Font* fn
     gui_handler = guih;
     font = fnt;
     //Defining a text
-	writeatext = new Text(gui_handler, font, "Press ESC to exit.", 18, sf::Color::Yellow);
+	writeatext = new Puffer::Text(gui_handler, font, "Press ESC to exit.", 18, sf::Color::Yellow);
 	writeatext->SetPosition(0,0);
 
 	//Trying PlainField
-	field = new PlainField(gui_handler);
+	field = new Puffer::PlainField(gui_handler);
 	field->SetPosition(200,400);
 	field->SetFieldLength(500,500);
-	factory = new TextFactory(gui_handler, field, "Merhaba arkadaslar &7bugunku &evideomuzda &1&fben &4arda&eyla birlikte &0bu mal &fprogrami calistirmaya &ecalisiyorum.", font);
+	factory = new Puffer::TextFactory(gui_handler, field, "Merhaba arkadaslar &7bugunku &evideomuzda &1&fben &4arda&eyla birlikte &0bu mal &fprogrami calistirmaya &ecalisiyorum.", font);
 	factory->PrepareTexts();
 
     //Defining button object
 	//! Doesn't perform good enough 4now
-	but = new Button(gui_handler, "GUI/BUTTON/button.png",50, 50, 196, 88, "GUI/BUTTON/button.data");
+	but = new Puffer::Button(gui_handler, "GUI/BUTTON/button.png",50, 50, 196, 88, "GUI/BUTTON/button.data");
 
 	//Defining player
-	cha = new Character(ingame_handler, "INGAME/PLAYER/character-tiles.png", 600, 100, 90, 80, "INGAME/PLAYER/player.data");
-	printf("[LEVEL-0] LOADED."); //Load message.
+	cha = new Puffer::Character(ingame_handler, "INGAME/PLAYER/character-tiles.png", 600, 100, 90, 80, "INGAME/PLAYER/player.data");
+	printf("[LEVEL-0] LOADED.\n"); //Load message.
 }
 
 Level0::~Level0() {
-
+	delete writeatext;
+	delete field; 
+	delete factory; 
+	delete but; 
+	delete cha; 
+	delete gui_handler;
+	delete ingame_handler;
+	printf("[DECONSTRUCT-LOG] Level0 class released.\n");
 }
 
 void Level0::draw(double deltaTime, sf::RenderWindow* wind, sf::View* ingame) {

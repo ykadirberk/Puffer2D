@@ -12,7 +12,7 @@ int ref_height = 900;
 int main() {
 	cout << "[LOG] Engine starting" << endl;
 	//?Creation of window
-	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(ref_width, ref_height), "SFML ENGINE", sf::Style::None);
+	sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(ref_width, ref_height), "Puffer", sf::Style::None);
 	window->setFramerateLimit(144);	//Setting framerate limit to 144
 
 	sf::Clock clock; //Defining time
@@ -43,7 +43,7 @@ int main() {
 	}
 
 	//Defining levels
-	Level0 level0(gui_handler,ingame_handler,&font);
+	Level0* level0= new Level0(gui_handler, ingame_handler, &font);
 
 	//?GAME LOOP
 	while(window->isOpen()) {
@@ -68,7 +68,7 @@ int main() {
 		window->clear(sf::Color::Transparent); 
 		
 		//?Drawing Levels
-		level0.draw(deltaTime,window,ingame_cam);
+		level0->draw(deltaTime,window,ingame_cam);
 		
 		//? Displaying layers
 		ingame_handler->display();
@@ -79,6 +79,7 @@ int main() {
 
 		window->display(); //Draws final image
 	}
-
+	delete level0;
+	system("PAUSE");
 	return 0;
 }

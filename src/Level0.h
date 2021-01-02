@@ -20,9 +20,9 @@ class Level0 {
         sf::RenderTexture* ingame_handler = NULL;
         sf::Font* font = NULL;
 
-        Text* writeatext = NULL;
-        PlainField* field = NULL;
-        TextFactory* factory = NULL;
-        Button* but = NULL;
-        Character* cha = NULL;
+        Puffer::Text* writeatext = NULL;
+        Puffer::PlainField* field = NULL;
+        Puffer::TextFactory* factory = NULL;
+        Puffer::Button* but = NULL;
+        Puffer::Character* cha = NULL;
 };

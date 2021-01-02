@@ -40,33 +40,34 @@
 #include "PlainField.h"
 using namespace std;
 
-class TextFactory {
-    public:
-        TextFactory(sf::RenderTexture* rtext, PlainField* field, string input, sf::Font* fnt);
-        ~TextFactory();
+namespace Puffer {
+    class TextFactory {
+        public:
+            TextFactory(sf::RenderTexture* rtext, PlainField* field, string input, sf::Font* fnt);
+            ~TextFactory();
 
-        void PrepareTexts();
-        void DrawTexts(double deltas);
-    private:
+            void PrepareTexts();
+            void DrawTexts(double deltas);
+        private:
 
-        inline int GetCharLength(char &letter, sf::Font &font, int font_size, bool boldnesss);
-        inline string CalculateLineLength(string ms);
+            inline int GetCharLength(char &letter, sf::Font &font, int font_size, bool boldnesss);
 
-        PlainField* fieldbox = NULL;
+            PlainField* fieldbox = NULL;
         
-        map<char, sf::Color> colormap;
-        vector<Text*> texts;
+            map<char, sf::Color> colormap;
+            vector<Text*> texts;
         
-        sf::Font* p_font;
-        sf::Color colortype;
-        sf::RenderTexture* r = NULL;
+            sf::Font* p_font;
+            sf::Color colortype;
+            sf::RenderTexture* r = NULL;
         
-        string total_string;
-        string total_string_backup;
+            string total_string;
+            string total_string_backup;
         
-        double posX, posY, fontsize = 0;
+            double posX, posY, fontsize = 0;
 
-        bool obotime = false;
-        bool boldness = false;
+            bool obotime = false;
+            bool boldness = false;
 
-};
+    };
+}

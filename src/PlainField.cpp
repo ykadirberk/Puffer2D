@@ -1,33 +1,33 @@
 #include "PlainField.h"
 
-PlainField::PlainField(sf::RenderTexture* rtext) {
+Puffer::PlainField::PlainField(sf::RenderTexture* rtext) {
     r = rtext;
 }
-PlainField::~PlainField() {
-
+Puffer::PlainField::~PlainField() {
+    printf("[DECONSTRUCT-LOG] PlainField class released.\n");
 }
 
-void PlainField::SetPosition(double x, double y) {
+void Puffer::PlainField::SetPosition(double x, double y) {
     dx = x;
     dy = y;
 }
-void PlainField::SetFieldLength(double x, double y) {
+void Puffer::PlainField::SetFieldLength(double x, double y) {
     dwidth = x;
     dheight = y;
 }
-double PlainField::GetWidth() {
+double Puffer::PlainField::GetWidth() {
     return dwidth;
 }
-double PlainField::GetHeight() {
+double Puffer::PlainField::GetHeight() {
     return dheight;
 }
-double PlainField::GetX() {
+double Puffer::PlainField::GetX() {
     return dx;
 }
-double PlainField::GetY() {
+double Puffer::PlainField::GetY() {
     return dy;
 }
 
-void PlainField::Draw() {
+void Puffer::PlainField::Draw() {
 
 }

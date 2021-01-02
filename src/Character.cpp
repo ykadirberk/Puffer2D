@@ -1,7 +1,7 @@
 #include "Character.h"
 
 
-Character::Character(sf::RenderTexture* rtext, string path, double sX, double sY, double width, double height, string datapath) {
+Puffer::Character::Character(sf::RenderTexture* rtext, string path, double sX, double sY, double width, double height, string datapath) {
     position = new wVector2D(sX,sY);;
     anima = new Animator(path,datapath);
     r = rtext;
@@ -18,33 +18,36 @@ Character::Character(sf::RenderTexture* rtext, string path, double sX, double sY
     anima->GetSprite()->setPosition(sX, sY);
 }
 
-Character::~Character() {
-
+Puffer::Character::~Character() {
+    delete position;
+    delete speed;
+    delete anima;
+    printf("[DECONSTRUCT-LOG] Character class released.\n");
 }
 
-void Character::SetPosition(double x, double y) {
+void Puffer::Character::SetPosition(double x, double y) {
     anima->GetSprite()->setPosition(x, y);
 }
 
-void Character::Move(double x, double y){
+void Puffer::Character::Move(double x, double y){
     anima->GetSprite()->move(x, y);
 }
 
-sf::Sprite* Character::GetSprite() {
+sf::Sprite* Puffer::Character::GetSprite() {
     return anima->GetSprite();
 }
 
-wVector2D Character::GetPosition() {
+wVector2D Puffer::Character::GetPosition() {
     wVector2D ret = *position;
     return ret;
 }
 
 
-void Character::Draw(){
+void Puffer::Character::Draw(){
     r->draw(*anima->GetSprite());
 }
 
-void Character::Calculate(double delta) {
+void Puffer::Character::Calculate(double delta) {
     //Defining move of character
     if( sf::Keyboard::isKeyPressed( sf::Keyboard::Up) || sf::Keyboard::isKeyPressed( sf::Keyboard::W) ) {
         anima->CalculateSprite("[UP]",delta);

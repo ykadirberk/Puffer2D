@@ -1,6 +1,6 @@
 #include "Text.h"
 
-Text::Text(sf::RenderTexture* rtext, sf::Font* font,string text, int size, sf::Color color) {
+Puffer::Text::Text(sf::RenderTexture* rtext, sf::Font* font,string text, int size, sf::Color color) {
     stringofthis = text;
     dafont = font;
     txt = new sf::Text();
@@ -12,31 +12,32 @@ Text::Text(sf::RenderTexture* rtext, sf::Font* font,string text, int size, sf::C
     
 }
 
-Text::~Text() {
-    
+Puffer::Text::~Text() {
+    delete txt;
+    printf("[DECONSTRUCT-LOG] Text class released.\n");
 }
 
-void Text::SetPosition(double x, double y) {
+void Puffer::Text::SetPosition(double x, double y) {
     txt->setPosition(x, y);
 }
 
-void Text::Move(double x, double y) {
+void Puffer::Text::Move(double x, double y) {
     txt->move(x, y);
 }
 
-double Text::GetX() {
+double Puffer::Text::GetX() {
     return txt->getPosition().x;
 }
 
-double Text::GetY() {
+double Puffer::Text::GetY() {
     return txt->getPosition().y;
 }
 
-void Text::SetText(string* t) {
+void Puffer::Text::SetText(string* t) {
     txt->setString(*t);
 }
 
-void Text::SetBoldness(bool b) {
+void Puffer::Text::SetBoldness(bool b) {
     if (b) {
         txt->setStyle(sf::Text::Bold);
     } else {
@@ -44,11 +45,11 @@ void Text::SetBoldness(bool b) {
     }
 }
 
-sf::Text* Text::GetTextObject() {
+sf::Text* Puffer::Text::GetTextObject() {
     return txt;
 }
 
-bool Text::Draw() {
+bool Puffer::Text::Draw() {
     if (visibility) {
         if (!d_draw) {
             txt->setString(stringofthis.substr(0,counter+1));
@@ -58,7 +59,7 @@ bool Text::Draw() {
     return d_draw;
 }
 
-void Text::Calc(double delt) {
+void Puffer::Text::Calc(double delt) {
     timer += delt;
     if (!d_draw) {
         if (timer >= animation_const) {

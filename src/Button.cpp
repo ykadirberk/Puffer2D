@@ -1,6 +1,6 @@
 #include "Button.h"
 
-Button::Button(sf::RenderTexture* rtext,string path ,double sX, double sY, double width, double height, string datapath) {
+Puffer::Button::Button(sf::RenderTexture* rtext,string path ,double sX, double sY, double width, double height, string datapath) {
     w = rtext;
     //Size values are stored. 
     iWidth = width;
@@ -15,31 +15,32 @@ Button::Button(sf::RenderTexture* rtext,string path ,double sX, double sY, doubl
     animator->GetSprite()->setPosition(sX, sY);
 }
 
-Button::~Button() {
-
+Puffer::Button::~Button() {
+    delete animator;
+    printf("[DECONSTRUCT-LOG] Button class released.\n");
 }
 
-void Button::SetPosition(double x, double y) {
+void Puffer::Button::SetPosition(double x, double y) {
     animator->GetSprite()->setPosition(x, y);
     iX = x;
     iY = y;
 }
 
-void Button::Move(double x, double y){
+void Puffer::Button::Move(double x, double y){
     animator->GetSprite()->move(x, y);
     iX += x;
     iY += y;
 }
 
-double Button::GetX(){
+double Puffer::Button::GetX(){
     return iX;
 }
 
-double Button::GetY(){
+double Puffer::Button::GetY(){
     return iY;
 }
 
-void Button::Calculations(double delta, sf::RenderWindow* wind) {
+void Puffer::Button::Calculations(double delta, sf::RenderWindow* wind) {
     // get the current mouse position in the window
     sf::Vector2i pixelPos = sf::Mouse::getPosition(*wind);
     // convert it to world coordinates
@@ -74,6 +75,6 @@ void Button::Calculations(double delta, sf::RenderWindow* wind) {
 }
 
 
-void Button::Draw(){
+void Puffer::Button::Draw(){
     w->draw(*animator->GetSprite());
 }

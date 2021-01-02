@@ -1,5 +1,6 @@
 #include "AnimationData.h"
-AnimationData::AnimationData(string path) {
+
+Puffer::AnimationData::AnimationData(string path) {
     datafile.open(path, ifstream::in); //Opens the file to read-only
     vector<string> lines; //This variable will store every line of read file
     istringstream datahandler; //To perform actions on stored data.
@@ -49,12 +50,14 @@ AnimationData::AnimationData(string path) {
     }
 }
 
-AnimationData::~AnimationData() {
-
+Puffer::AnimationData::~AnimationData() {
+    values.clear();
+    keys.clear();
+    printf("[DECONSTRUCT-LOG] AnimationData class released.\n");
 }
 
 //This function is used to create a type of map.
-vector<animator::pair> AnimationData::at(string key) {
+vector<Puffer::animator::pair> Puffer::AnimationData::at(string key) {
     for (int i = 0; i < keys.size(); i++) {
         if (keys[i].find(key) != string::npos) {
             return values[i];
@@ -64,6 +67,6 @@ vector<animator::pair> AnimationData::at(string key) {
     return empty_pair;
 }
 
-animator::pair AnimationData::GetScaleRule() {
+Puffer::animator::pair Puffer::AnimationData::GetScaleRule() {
     return scale_rule;
 }

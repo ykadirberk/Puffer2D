@@ -1,6 +1,6 @@
 #include "Animator.h"
 
-Animator::Animator(string tilesetpath, string datapath) {
+Puffer::Animator::Animator(string tilesetpath, string datapath) {
     anidata = new AnimationData(datapath);
     handled = new sf::Texture();
     if (!handled->loadFromFile(tilesetpath)) { //! Texture read from file. Will be changed later
@@ -11,11 +11,14 @@ Animator::Animator(string tilesetpath, string datapath) {
     calcsp = new sf::Sprite(*handled, sf::IntRect(0,0, anidata->GetScaleRule().x, anidata->GetScaleRule().y)); //
 }
 
-Animator::~Animator() {
-    
+Puffer::Animator::~Animator() {
+    delete anidata;
+    delete handled;
+    delete calcsp;
+    printf("[DECONSTRUCT-LOG] Animator class released.\n");
 }
 
-void Animator::CalculateSprite(string key, double deltatime) {
+void Puffer::Animator::CalculateSprite(string key, double deltatime) {
     //This condition checks if the animation is changed, so that it can reset timer and index variables.
     if (key != keybackup) {
         timer = 0;
@@ -40,10 +43,10 @@ void Animator::CalculateSprite(string key, double deltatime) {
     }
 }
 
-animator::pair Animator::GetScaleRule() {
+Puffer::animator::pair Puffer::Animator::GetScaleRule() {
     return anidata->GetScaleRule();
 }
 
-sf::Sprite* Animator::GetSprite() {
+sf::Sprite* Puffer::Animator::GetSprite() {
     return calcsp;
 }
