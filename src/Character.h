@@ -26,6 +26,8 @@ namespace Puffer{
         private:
             wVector2D* position = NULL;
             wVector2D* speed = NULL;
+            wVector2D* rect_sizes = NULL;
+
             Animator* anima = NULL;
             sf::RenderTexture* r = NULL;
             double iWidth = 0, iHeight = 0; //Sprite'ın olmasını istediğimiz büyüklüğü
