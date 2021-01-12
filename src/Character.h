@@ -18,15 +18,15 @@ namespace Puffer{
             void Move(double x, double y);
             
             sf::Sprite* GetSprite();
-            wVector2D GetPosition();
+            v2d GetPosition();
 
             void Draw();
             void Calculate(double delta);
 
         private:
-            wVector2D* position = NULL;
-            wVector2D* speed = NULL;
-            wVector2D* rect_sizes = NULL;
+            v2d* position = NULL;
+            v2d* speed = NULL;
+            v2d* rect_sizes = NULL;
 
             Animator* anima = NULL;
             sf::RenderTexture* r = NULL;

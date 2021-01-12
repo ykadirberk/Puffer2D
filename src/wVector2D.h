@@ -1,6 +1,10 @@
 #pragma once
 #include <math.h>
 #include <stdio.h>
+
+//an abbreviation for wVector2D
+#define v2d wVector2D
+
 namespace ess {
     const double PI = 3.14159265;
 

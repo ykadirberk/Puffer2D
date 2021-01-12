@@ -5,11 +5,11 @@ Puffer::Character::Character(sf::RenderTexture* rtext, string path, double sX, d
     anima = new Animator(path,datapath);
     r = rtext;
     
-    position = new wVector2D(sX,sY);
+    position = new v2d(sX,sY);
     //Movespeed.
-    speed = new wVector2D(200.0, 200.0);
+    speed = new v2d(200.0, 200.0);
     //Storing sizes of character.
-    rect_sizes = new wVector2D(width, height);
+    rect_sizes = new v2d(width, height);
 
     //sf::Sprite uses Scale as a size paramater. This statement manipulates it to act like size.
     anima->GetSprite()->setScale(rect_sizes->x/anima->GetScaleRule().x, rect_sizes->y/anima->GetScaleRule().y);
@@ -36,8 +36,8 @@ sf::Sprite* Puffer::Character::GetSprite() {
     return anima->GetSprite();
 }
 
-wVector2D Puffer::Character::GetPosition() {
-    wVector2D ret = *position;
+v2d Puffer::Character::GetPosition() {
+    v2d ret = *position;
     return ret;
 }
 
