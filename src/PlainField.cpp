@@ -17,7 +17,7 @@ void Puffer::PlainField::SetFieldLength(double x, double y) {
     size->x = x;
     size->y = y;
 }
-v2d Puffer::PlainField::GetPosition() {
+v2d Puffer::PlainField::GetSize() {
     return *size;
 }
 v2d Puffer::PlainField::GetPosition() {
