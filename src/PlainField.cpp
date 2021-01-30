@@ -2,30 +2,26 @@
 
 Puffer::PlainField::PlainField(sf::RenderTexture* rtext) {
     r = rtext;
+    position = new v2d();
+    size = new v2d();
 }
 Puffer::PlainField::~PlainField() {
     printf("[DECONSTRUCT-LOG] PlainField class released.\n");
 }
 
 void Puffer::PlainField::SetPosition(double x, double y) {
-    dx = x;
-    dy = y;
+    position->x = x;
+    position->y = y;
 }
 void Puffer::PlainField::SetFieldLength(double x, double y) {
-    dwidth = x;
-    dheight = y;
+    size->x = x;
+    size->y = y;
 }
-double Puffer::PlainField::GetWidth() {
-    return dwidth;
+v2d Puffer::PlainField::GetPosition() {
+    return *size;
 }
-double Puffer::PlainField::GetHeight() {
-    return dheight;
-}
-double Puffer::PlainField::GetX() {
-    return dx;
-}
-double Puffer::PlainField::GetY() {
-    return dy;
+v2d Puffer::PlainField::GetPosition() {
+    return *position;
 }
 
 void Puffer::PlainField::Draw() {

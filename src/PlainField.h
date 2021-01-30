@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <string>
+#include "wVector2D.h"
 
 using namespace std;
 
@@ -12,15 +13,14 @@ namespace Puffer {
 
             void SetPosition(double x, double y);
             void SetFieldLength(double x, double y);
-            double GetWidth();
-            double GetHeight();
-            double GetX();
-            double GetY();
+            v2d GetSize();
+            v2d GetPosition();
             void Draw();
 
         private:
             sf::RenderTexture* r = NULL;
-            double dx = 0, dy = 0, dwidth = 0, dheight = 0;
+            v2d* position = NULL;
+            v2d* size = NULL;
     };
 }
 
