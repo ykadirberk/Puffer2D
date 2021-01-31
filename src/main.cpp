@@ -79,7 +79,7 @@ int main() {
 
 		window->display(); //Draws final image
 	}
+	
 	delete level0;
-	system("PAUSE");
 	return 0;
 }

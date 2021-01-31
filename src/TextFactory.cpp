@@ -110,7 +110,7 @@ void Puffer::TextFactory::PrepareTexts() {
                         lines[i] = lines[i].substr(ptfound + 2);
                     }
                     Text* tempTx = new Text(r, p_font, tempStr, fontsize, colortype); 
-                    tempTx->SetPosition(10 + fieldbox->GetPosition().x, 10 + fieldbox->GetPosition().y  + (((6.0 / 18.0) + 1) * fontsize)*i);
+                    tempTx->SetPosition(10 + fieldbox->GetPosition().x + lastextwidth, 10 + fieldbox->GetPosition().y  + (((6.0 / 18.0) + 1) * fontsize)*i);
                     tempTx->SetBoldness(boldness);
                     texts.push_back(tempTx);
                     for(int j = 0; j < tempStr.length(); j++) {
@@ -121,12 +121,12 @@ void Puffer::TextFactory::PrepareTexts() {
                     ptfound = lines[i].find_first_of('&');
                 }
                 Text* tempTx = new Text(r, p_font, lines[i], fontsize, colortype);
-                tempTx->SetPosition(10 + fieldbox->GetPosition().x, 10 + fieldbox->GetPosition().y  + (((6.0 / 18.0) + 1) * fontsize)*i);
+                tempTx->SetPosition(10 + fieldbox->GetPosition().x + lastextwidth, 10 + fieldbox->GetPosition().y  + (((6.0 / 18.0) + 1) * fontsize)*i);
                 tempTx->SetBoldness(boldness);
                 texts.push_back(tempTx);
             } else {
                 Text* tempTx = new Text(r, p_font, lines[i], fontsize, colortype);
-                tempTx->SetPosition(10 + fieldbox->GetPosition().x, 10 + fieldbox->GetPosition().y  + (((6.0 / 18.0) + 1) * fontsize)*i);
+                tempTx->SetPosition(10 + fieldbox->GetPosition().x + lastextwidth, 10 + fieldbox->GetPosition().y  + (((6.0 / 18.0) + 1) * fontsize)*i);
                 tempTx->SetBoldness(boldness);
                 texts.push_back(tempTx);
             }
