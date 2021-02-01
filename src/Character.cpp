@@ -1,8 +1,12 @@
 #include "Character.h"
 
+Puffer::Animator* Puffer::Character::anima = NULL;
 
 Puffer::Character::Character(sf::RenderTexture* rtext, string path, double sX, double sY, double width, double height, string datapath) {
-    anima = new Animator(path,datapath);
+    if (anima == NULL) {
+        anima = new Animator(path,datapath);
+    }
+
     r = rtext;
     
     position = new v2d(sX,sY);
@@ -36,9 +40,8 @@ sf::Sprite* Puffer::Character::GetSprite() {
     return anima->GetSprite();
 }
 
-v2d Puffer::Character::GetPosition() {
-    v2d ret = *position;
-    return ret;
+v2d* Puffer::Character::GetPosition() {
+    return position;
 }
 
 

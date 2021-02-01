@@ -39,13 +39,13 @@ void Puffer::TextFactory::PrepareTexts() {
         int lastbreak = 0;
         int textwidth;
         for (int i = 0; i < total_string.length(); i++) {
-            if (textwidth < fieldbox->GetSize().x) { //Checking endline
+            if (textwidth < fieldbox->GetSize()->x) { //Checking endline
                 textwidth += GetCharLength(total_string[i], *p_font, fontsize, boldness);
             } else { //Reads string if endline
                 string _sub = total_string.substr(0, lastbreak);
                 total_string = total_string.substr(lastbreak + 1);
                 Text* back_ = new Text(r, p_font, _sub, fontsize, colortype); printf("[DEBUGLOG]%s\n", _sub.c_str());
-                back_->SetPosition(10 + fieldbox->GetPosition().x, 10 + fieldbox->GetPosition().y  + (((6.0 / 18.0) + 1) * fontsize)*linecounter); 
+                back_->SetPosition(10 + fieldbox->GetPosition()->x, 10 + fieldbox->GetPosition()->y  + (((6.0 / 18.0) + 1) * fontsize)*linecounter); 
                 texts.push_back(back_);
                 lastbreak = 0; 
                 textwidth = 0;
@@ -54,7 +54,7 @@ void Puffer::TextFactory::PrepareTexts() {
             }
             if (i == total_string.length() - 1) { //Draws to string if no endline at the end.
                 Text* back_ = new Text(r, p_font, total_string, fontsize, colortype); 
-                back_->SetPosition(10 + fieldbox->GetPosition().x, 10 + fieldbox->GetPosition().y  + (((6.0 / 18.0) + 1) * fontsize)*linecounter);  
+                back_->SetPosition(10 + fieldbox->GetPosition()->x, 10 + fieldbox->GetPosition()->y  + (((6.0 / 18.0) + 1) * fontsize)*linecounter);  
                 texts.push_back(back_);
                 linecounter = 0;  printf("[DEBUGLOG]%s\n", total_string.c_str());
             }
@@ -71,7 +71,7 @@ void Puffer::TextFactory::PrepareTexts() {
         bool tempBold = boldness;
         vector<string> lines;
         for (int i = 0; i < total_string.length(); i++) {
-            if (textwidth < fieldbox->GetSize().x) { //Checking endline
+            if (textwidth < fieldbox->GetSize()->x) { //Checking endline
                 if (total_string[i] == '&' && total_string.length() < i + 2) {
                     i += 2;
                 }
@@ -110,7 +110,7 @@ void Puffer::TextFactory::PrepareTexts() {
                         lines[i] = lines[i].substr(ptfound + 2);
                     }
                     Text* tempTx = new Text(r, p_font, tempStr, fontsize, colortype); 
-                    tempTx->SetPosition(10 + fieldbox->GetPosition().x + lastextwidth, 10 + fieldbox->GetPosition().y  + (((6.0 / 18.0) + 1) * fontsize)*i);
+                    tempTx->SetPosition(10 + fieldbox->GetPosition()->x + lastextwidth, 10 + fieldbox->GetPosition()->y  + (((6.0 / 18.0) + 1) * fontsize)*i);
                     tempTx->SetBoldness(boldness);
                     texts.push_back(tempTx);
                     for(int j = 0; j < tempStr.length(); j++) {
@@ -121,12 +121,12 @@ void Puffer::TextFactory::PrepareTexts() {
                     ptfound = lines[i].find_first_of('&');
                 }
                 Text* tempTx = new Text(r, p_font, lines[i], fontsize, colortype);
-                tempTx->SetPosition(10 + fieldbox->GetPosition().x + lastextwidth, 10 + fieldbox->GetPosition().y  + (((6.0 / 18.0) + 1) * fontsize)*i);
+                tempTx->SetPosition(10 + fieldbox->GetPosition()->x + lastextwidth, 10 + fieldbox->GetPosition()->y  + (((6.0 / 18.0) + 1) * fontsize)*i);
                 tempTx->SetBoldness(boldness);
                 texts.push_back(tempTx);
             } else {
                 Text* tempTx = new Text(r, p_font, lines[i], fontsize, colortype);
-                tempTx->SetPosition(10 + fieldbox->GetPosition().x + lastextwidth, 10 + fieldbox->GetPosition().y  + (((6.0 / 18.0) + 1) * fontsize)*i);
+                tempTx->SetPosition(10 + fieldbox->GetPosition()->x + lastextwidth, 10 + fieldbox->GetPosition()->y  + (((6.0 / 18.0) + 1) * fontsize)*i);
                 tempTx->SetBoldness(boldness);
                 texts.push_back(tempTx);
             }

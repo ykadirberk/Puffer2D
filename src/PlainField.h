@@ -13,8 +13,8 @@ namespace Puffer {
 
             void SetPosition(double x, double y);
             void SetFieldLength(double x, double y);
-            v2d GetSize();
-            v2d GetPosition();
+            v2d* GetSize();
+            v2d* GetPosition();
             void Draw();
 
         private:

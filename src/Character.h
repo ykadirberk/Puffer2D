@@ -18,7 +18,7 @@ namespace Puffer{
             void Move(double x, double y);
             
             sf::Sprite* GetSprite();
-            v2d GetPosition();
+            v2d* GetPosition();
 
             void Draw();
             void Calculate(double delta);
@@ -28,7 +28,7 @@ namespace Puffer{
             v2d* speed = NULL;
             v2d* rect_sizes = NULL;
 
-            Animator* anima = NULL;
+            static Animator* anima;
             sf::RenderTexture* r = NULL;
             double iWidth = 0, iHeight = 0; //Sprite'ın olmasını istediğimiz büyüklüğü
     };

@@ -21,7 +21,7 @@ namespace Puffer {
             void Calculations(double delta, sf::RenderWindow* wind);
             void Draw();
         private:
-            Animator* animator = NULL;
+            static Animator* animator;
             sf::RenderTexture* w = NULL;
             double iWidth = 0, iHeight = 0; //Sprite'ın olmasını istediğimiz büyüklüğü
             double iX = 0, iY = 0; //Sprite'ın olmasını istediğimiz konumu

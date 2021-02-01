@@ -1,5 +1,7 @@
 #include "Button.h"
 
+Puffer::Animator* Puffer::Button::animator = NULL;
+
 Puffer::Button::Button(sf::RenderTexture* rtext,string path ,double sX, double sY, double width, double height, string datapath) {
     w = rtext;
     //Size values are stored. 
@@ -9,7 +11,9 @@ Puffer::Button::Button(sf::RenderTexture* rtext,string path ,double sX, double s
     iX = sX;
     iY = sY;
 
-    animator = new Animator(path, datapath);
+    if (animator == NULL) {
+        animator = new Animator(path, datapath);
+    }
     //sf::Sprite uses Scale as a size paramater. This statement manipulates it to act like size.
     animator->GetSprite()->setScale(iWidth/animator->GetScaleRule().x, iHeight/animator->GetScaleRule().y);
     animator->GetSprite()->setPosition(sX, sY);
