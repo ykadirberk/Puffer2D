@@ -4,6 +4,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 #include "Level0.h"
+#include <iostream>
 using namespace std;
 
 int ref_width = 1600;
@@ -25,12 +26,13 @@ int main() {
 	gui_handler->setView(*gui_cam);
 	const sf::Texture& gui_texture = gui_handler->getTexture(); //Created a reference to renderer's texture
 	sf::Sprite gui_comps(gui_texture); //Preparing reference texture to get rendered.
-	
+	cout<<"main.cpp 29"<<endl;
 	//Defining in-game camera component
-	sf::View* ingame_cam = new sf::View(sf::FloatRect(0.f,0.f,ref_width, ref_height)); //The part that will be showed on screen
+	Puffer::Camera* ingame_cam = new Puffer::Camera(0, 0, ref_width/2, ref_height/2 ,ref_width, ref_height );cout<<"main.cpp sj"<<endl;
+	//sf::View* ingame_cam = new sf::View(sf::FloatRect(0.f,0.f,ref_width, ref_height)); //The part that will be showed on screen
 	sf::RenderTexture* ingame_handler = new sf::RenderTexture(); //Render object
 	ingame_handler->create(ref_width,ref_height);
-	ingame_handler->setView(*ingame_cam);
+	ingame_handler->setView(*ingame_cam->getCam());
 	const sf::Texture& ingame_texture = ingame_handler->getTexture(); //Created a reference to renderer's texture
 	sf::Sprite ingame_comps(ingame_texture); //Preparing reference texture to get rendered.
 

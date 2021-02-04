@@ -7,13 +7,14 @@
 #include "AnimationData.h"
 #include "PlainField.h"
 #include "TextFactory.h"
+#include "Camera.h"
 
 class Level0 {
     public:
         Level0(sf::RenderTexture* guih, sf::RenderTexture* ingameh, sf::Font* fnt);
         ~Level0();
 
-        void draw(double deltaTime, sf::RenderWindow* wind, sf::View* ingame);
+        void draw(double deltaTime, sf::RenderWindow* wind, Puffer::Camera* ingame);
 
     private:
         sf::RenderTexture* gui_handler = NULL;

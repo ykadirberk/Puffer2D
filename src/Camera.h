@@ -7,7 +7,7 @@ using namespace std;
 namespace Puffer{
     class Camera{
         public:
-            Camera(wVector2D* center_pos, wVector2D* size , wVector2D* border);
+            Camera(double posx, double posy, double sizex, double sizey , double borderx, double bordery);
             ~Camera();
 
             void Shake();
@@ -19,6 +19,7 @@ namespace Puffer{
 
             sf::View* getCam();
             wVector2D* getCenter();
+            
             void setCenter(wVector2D center);
             void setCenter(double x, double y);
 

@@ -1,9 +1,15 @@
 #include "Camera.h"
 
-Puffer::Camera::Camera(wVector2D* center_pos, wVector2D* size , wVector2D* border){
-    cam_center = center_pos;
-    camsize = size;
-    borders = border;
+Puffer::Camera::Camera(double posx, double posy, double sizex, double sizey , double borderx, double bordery){
+    cam_center = new v2d();
+    camsize = new v2d();
+    borders = new v2d();
+
+    camsize->x = sizex; camsize->y = sizey;
+    borders->x = borderx; borders->y = bordery;
+    cam_center->x = borders->x/2; cam_center->y = borders->y/2;
+
+    cam = new sf::View(sf::FloatRect(0.f,0.f,camsize->x,camsize->y));
 }
 
 Puffer::Camera::~Camera(){}
@@ -11,16 +17,19 @@ Puffer::Camera::~Camera(){}
 void Puffer::Camera::followc(Puffer::Character* object_to_follow){
     cam_center->x = object_to_follow->GetPosition()->x + (object_to_follow->GetSize()->x / 2);
     cam_center->y = object_to_follow->GetPosition()->y + (object_to_follow->GetSize()->y / 2);
+
     cam->setCenter(cam_center->x, cam_center->y);
 }
 
 void Puffer::Camera::followc_in_borders(Puffer::Character* object_to_follow){
-    cam_center->x = object_to_follow->GetPosition()->x + (object_to_follow->GetSize()->x / 2);
-    cam_center->y = object_to_follow->GetPosition()->y + (object_to_follow->GetSize()->y / 2);
+    
 
-    if(cam->getCenter().x - (cam->getSize().x/2) > 0 && cam->getCenter().x + (cam->getSize().x / 2) < borders->x
-    && cam->getCenter().y - (cam->getSize().x/2) > 0 && cam->getCenter().y + (cam->getSize().y / 2) < borders->y)
+    if(cam_center->x - (cam->getSize().x/2) > 0 && cam_center->x + (cam->getSize().x / 2) < borders->x
+    && cam_center->y - (cam->getSize().x/2) > 0 && cam_center->y + (cam->getSize().y / 2) < borders->y)
     {
+        cam_center->x = object_to_follow->GetPosition()->x + (object_to_follow->GetSize()->x / 2);
+        cam_center->y = object_to_follow->GetPosition()->y + (object_to_follow->GetSize()->y / 2);
+        
         cam->setCenter(cam_center->x, cam_center->y);
     }
 }

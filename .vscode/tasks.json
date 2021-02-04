@@ -22,7 +22,8 @@
         {
             "label": "Run",
             "type": "shell",
-            "command": "cd release \n .\\app.exe"
+            "command": "cd release \n .\\app.exe",
+            "problemMatcher": []
         }
     ]
 }
