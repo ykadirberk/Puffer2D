@@ -19,7 +19,8 @@ namespace Puffer{
             
             sf::Sprite* GetSprite();
             v2d* GetPosition();
-
+            v2d* GetSize();
+            
             void Draw();
             void Calculate(double delta);
 

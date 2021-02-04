@@ -44,6 +44,9 @@ v2d* Puffer::Character::GetPosition() {
     return position;
 }
 
+v2d* Puffer::Character::GetSize(){
+    return rect_sizes;
+}
 
 void Puffer::Character::Draw(){
     r->draw(*anima->GetSprite());
