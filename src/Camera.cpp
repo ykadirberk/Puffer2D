@@ -7,7 +7,7 @@ Puffer::Camera::Camera(double posx, double posy, double sizex, double sizey , do
 
     camsize->x = sizex; camsize->y = sizey;
     borders->x = borderx; borders->y = bordery;
-    cam_center->x = borders->x/2; cam_center->y = borders->y/2;
+    cam_center->x = sizex/2 + 1; cam_center->y = sizey/2 + 1;
 
     cam = new sf::View(sf::FloatRect(0.f,0.f,camsize->x,camsize->y));
 }
@@ -22,16 +22,26 @@ void Puffer::Camera::followc(Puffer::Character* object_to_follow){
 }
 
 void Puffer::Camera::followc_in_borders(Puffer::Character* object_to_follow){
-    
+    cam_center->x = object_to_follow->GetPosition()->x + (object_to_follow->GetSize()->x / 2);
+    cam_center->y = object_to_follow->GetPosition()->y + (object_to_follow->GetSize()->y / 2);
 
-    if(cam_center->x - (cam->getSize().x/2) > 0 && cam_center->x + (cam->getSize().x / 2) < borders->x
-    && cam_center->y - (cam->getSize().x/2) > 0 && cam_center->y + (cam->getSize().y / 2) < borders->y)
-    {
-        cam_center->x = object_to_follow->GetPosition()->x + (object_to_follow->GetSize()->x / 2);
-        cam_center->y = object_to_follow->GetPosition()->y + (object_to_follow->GetSize()->y / 2);
-        
-        cam->setCenter(cam_center->x, cam_center->y);
+    if (!(cam_center->x + (camsize->x/2) <= borders->x)) {
+        cam_center->x = borders->x - (camsize->x/2);
     }
+
+    if (!(cam_center->y + (camsize->y/2) <= borders->y)) {
+        cam_center->y = borders->y - (camsize->y/2);
+    }
+
+    if(!(cam_center->y - (camsize->y/2) >= 0)) {
+        cam_center->y = camsize->y/2;
+    }
+
+    if(!(cam_center->x - (camsize->x/2) >= 0)) {
+        cam_center->x = camsize->x/2;
+    }
+
+    cam->setCenter(cam_center->x, cam_center->y);
 }
 
 sf::View* Puffer::Camera::getCam(){

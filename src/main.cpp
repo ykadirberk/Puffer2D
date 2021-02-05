@@ -7,8 +7,8 @@
 #include <iostream>
 using namespace std;
 
-int ref_width = 1600;
-int ref_height = 900;
+const int ref_width = 1600;
+const int ref_height = 900;
 
 int main() {
 	cout << "[LOG] Engine starting" << endl;
@@ -28,7 +28,7 @@ int main() {
 	sf::Sprite gui_comps(gui_texture); //Preparing reference texture to get rendered.
 	cout<<"main.cpp 29"<<endl;
 	//Defining in-game camera component
-	Puffer::Camera* ingame_cam = new Puffer::Camera(0, 0, ref_width/2, ref_height/2 ,ref_width, ref_height );cout<<"main.cpp sj"<<endl;
+	Puffer::Camera* ingame_cam = new Puffer::Camera(0, 0, ref_width, ref_height ,ref_width*2, ref_height*2);cout<<"main.cpp sj"<<endl;
 	//sf::View* ingame_cam = new sf::View(sf::FloatRect(0.f,0.f,ref_width, ref_height)); //The part that will be showed on screen
 	sf::RenderTexture* ingame_handler = new sf::RenderTexture(); //Render object
 	ingame_handler->create(ref_width,ref_height);
