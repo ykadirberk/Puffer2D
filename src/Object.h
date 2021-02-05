@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "wVector2D.h"
 
 namespace Puffer {
     class Object {
@@ -8,6 +9,12 @@ namespace Puffer {
             }
             virtual void Draw() {
                 printf("Draw is not defined.");
-            }        
+            }
+            virtual v2d* GetPosition() {
+                return new v2d();
+            }
+            virtual v2d* GetSize() {
+                return new v2d();
+            }
     };
 }

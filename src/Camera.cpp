@@ -14,14 +14,14 @@ Puffer::Camera::Camera(double posx, double posy, double sizex, double sizey , do
 
 Puffer::Camera::~Camera(){}
 
-void Puffer::Camera::followc(Puffer::Character* object_to_follow){
+void Puffer::Camera::followc(Puffer::Object* object_to_follow){
     cam_center->x = object_to_follow->GetPosition()->x + (object_to_follow->GetSize()->x / 2);
     cam_center->y = object_to_follow->GetPosition()->y + (object_to_follow->GetSize()->y / 2);
 
     cam->setCenter(cam_center->x, cam_center->y);
 }
 
-void Puffer::Camera::followc_in_borders(Puffer::Character* object_to_follow){
+void Puffer::Camera::followc_in_borders(Puffer::Object* object_to_follow){
     cam_center->x = object_to_follow->GetPosition()->x + (object_to_follow->GetSize()->x / 2);
     cam_center->y = object_to_follow->GetPosition()->y + (object_to_follow->GetSize()->y / 2);
 

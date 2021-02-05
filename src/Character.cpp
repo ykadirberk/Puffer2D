@@ -11,7 +11,7 @@ Puffer::Character::Character(sf::RenderTexture* rtext, string path, double sX, d
     
     position = new v2d(sX,sY);
     //Movespeed.
-    speed = new v2d(200.0, 200.0);
+    speed = new v2d(500.0, 500.0);
     //Storing sizes of character.
     rect_sizes = new v2d(width, height);
 

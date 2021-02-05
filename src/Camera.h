@@ -11,8 +11,8 @@ namespace Puffer{
             ~Camera();
 
             void Shake();
-            void followc(Puffer::Character* object_to_follow);
-            void followc_in_borders(Puffer::Character* object_to_follow);
+            void followc(Puffer::Object* object_to_follow);
+            void followc_in_borders(Puffer::Object* object_to_follow);
 
 
             void move();
